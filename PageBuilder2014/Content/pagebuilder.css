@@ -1,0 +1,59 @@
+﻿img{
+    width:100%;
+}
+/*pgToolbar*/
+.pgToolbar{
+    position: fixed;
+    top:60px;
+    left:0px;
+    
+}
+
+.pgToolbar img {
+    border: solid #008000 1px;
+    margin: 5px 0;
+}
+.accordion_box{
+   height:500px; 
+}
+.pbLayout .row{
+    margin: 5px 0;
+}
+.plSection{
+    min-height: 50px;
+    background-color: #ffe;
+    color:#fff;
+    border:solid #666 2px;
+}
+.plPage{
+    margin:20px 0;
+    min-height: 30px;
+    background-color: #aaa;
+    color:#fff;
+    text-align: center;
+}
+.plSectionPage{
+    margin:2px 0;
+    min-height: 10px;
+    background-color: #aaa;
+    color:#fff;
+    text-align: center;
+    font-size: 6px;
+}
+.sortable{
+    min-height: 30px;
+}
+.ui-sortable-helper img{
+    width:10%;
+}
+/*pgPagePanel*/
+.pgSelected{
+    border:solid blue 1px;
+}
+
+/*pgButtons*/
+.pgButtons {
+    position: fixed;
+    top:60px;
+    right:0px;
+}

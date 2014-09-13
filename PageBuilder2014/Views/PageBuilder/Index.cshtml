@@ -1,8 +1,140 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_PageBuilderLayout.cshtml";
 }
+@section stylesheet
+{
+    <link href="~/Content/pagebuilder.css" rel="stylesheet" />
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 accordion_box">
+            <div class="accordion  pgToolbar col-md-3">
+                <h3>Layout</h3>
+                <div class="pbLayout">
+                    <div>
+                        <div class="row draggable node" pbnode="c12">
+                            <div pbnode="c6a" class="col-xs-6 node">
+                                <div class="plSectionPage">SECTION TOP</div>
+                                <div class="sortable"></div>
+                                <div class="plSectionPage">SECTION BOTTOM</div>
+                            </div>
+                            <div pbnode="c6b" class="col-xs-6 node">
+                                <div class="plSectionPage">SECTION TOP</div>
+                                <div class="sortable"></div>
+                                <div class="plSectionPage">SECTION BOTTOM</div>
+                            </div>
+                        </div>
+                        <div class="row draggable node" pbnode="c12">
+                            <div pbnode="c4a" class="col-xs-4 node">
+                                <div class="plSectionPage">SECTION TOP</div>
+                                <div class="sortable"></div>
+                                <div class="plSectionPage">SECTION BOTTOM</div>
+                            </div>
+                            <div pbnode="c8b" class="col-xs-8 node">
+                                <div class="plSectionPage">SECTION TOP</div>
+                                <div class="sortable"></div>
+                                <div class="plSectionPage">SECTION BOTTOM</div>
+                            </div>
+                        </div>
+                        <div class="row draggable node" pbnode="c12">
+                            <div pbnode="c8a" class="col-xs-8 node">
+                                <div class="plSectionPage">SECTION TOP</div>
+                                <div class="sortable"></div>
+                                <div class="plSectionPage">SECTION BOTTOM</div>
+                            </div>
+                            <div pbnode="c4b" class="col-xs-4 node">
+                                <div class="plSectionPage">SECTION TOP</div>
+                                <div class="sortable"></div>
+                                <div class="plSectionPage">SECTION BOTTOM</div>
+                            </div>
+                        </div>
+                        <div class="row draggable node" pbnode="c12">
+                            <div pbnode="c4a" class="col-xs-4 node">
+                                <div class="plSectionPage">SECTION TOP</div>
+                                <div class="sortable"></div>
+                                <div class="plSectionPage">SECTION BOTTOM</div>
+                            </div>
+                            <div pbnode="c4b" class="col-xs-4 node">
+                                <div class="plSectionPage">SECTION TOP</div>
+                                <div class="sortable"></div>
+                                <div class="plSectionPage">SECTION BOTTOM</div>
+                            </div>
+                            <div pbnode="c4c" class="col-xs-4 node">
+                                <div class="plSectionPage">SECTION TOP</div>
+                                <div class="sortable"></div>
+                                <div class="plSectionPage">SECTION BOTTOM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Model 1</h3>
+                <div>
+                    <div>
+                        <div class="row draggable node" pbnode="s0101">
+                            <img src="~/Content/templates/unify/images/home/s1.png" alt="" />
+                        </div>
+                        <div class="row draggable node" pbnode="s0102">
+                            <img src="~/Content/templates/unify/images/home/s2.png" alt="" />
+                        </div>
+                        <div class="row draggable node" pbnode="s0103">
+                            <img src="~/Content/templates/unify/images/home/s3.png" alt="" />
+                        </div>
+                        <div class="row draggable node" pbnode="s0104">
+                            <img src="~/Content/templates/unify/images/home/s4.png" alt="" />
+                        </div>
+                        <div class="row draggable node" pbnode="s0105">
+                            <img src="~/Content/templates/unify/images/home/s5.png" alt="" />
+                        </div>
+                    </div>
+                </div>
+                <h3>Model 2</h3>
+                <div>
+                    <div>
 
-<h2>Index</h2>
+                        <div class="row draggable node" pbnode="s0106">
+                            <img src="~/Content/templates/unify/images/home/s6.png" alt="" />
+                        </div>
+                        <div class="row draggable node" pbnode="s0107">
+                            <img src="~/Content/templates/unify/images/home/s7.png" alt="" />
+                        </div>
+                        <div class="row draggable node" pbnode="s0108">
+                            <img src="~/Content/templates/unify/images/home/s8.png" alt="" />
+                        </div>
+                        <div class="row draggable node" pbnode="s0109">
+                            <img src="~/Content/templates/unify/images/home/s9.png" alt="" />
+                        </div>
+                        <div class="row draggable node" pbnode="s01010">
+                            <img src="~/Content/templates/unify/images/home/s10.png" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8  pgPagePanel">
+            <div class="node pbRoot" pbnode="root">
+                <div class="plPage">PAGE TOP</div>
+                <div class="sortable">
+                </div>
+                <div class="plPage">PAGE BOTTOM</div>
+            </div>
+        </div>
+
+        <div class="col-md-1">
+            <div class="pgButtons">
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnDelete">Delete</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnPreview">Preview</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/pagebuilder.js"></script>
+}
 
