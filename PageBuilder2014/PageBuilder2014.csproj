@@ -195,8 +195,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\pagebuilder.css" />
-    <Content Include="Content\templates\t1\html\home\s0101.html" />
     <Content Include="Content\templates\t1\html\home\p1.html" />
+    <Content Include="Content\templates\t1\html\home\s0101.html" />
+    <Content Include="Content\templates\t1\html\home\s0107.html" />
+    <Content Include="Content\templates\t1\html\home\s0109.html" />
     <Content Include="Content\templates\t1\html\home\s0110.html" />
     <Content Include="Content\templates\t1\html\home\s0111.html" />
     <Content Include="Content\templates\t1\html\home\s0102.html" />
@@ -204,9 +206,7 @@
     <Content Include="Content\templates\t1\html\home\s0104.html" />
     <Content Include="Content\templates\t1\html\home\s0105.html" />
     <Content Include="Content\templates\t1\html\home\s0106.html" />
-    <Content Include="Content\templates\t1\html\home\s0107.html" />
     <Content Include="Content\templates\t1\html\home\s0108.html" />
-    <Content Include="Content\templates\t1\html\home\s0109.html" />
     <Content Include="Content\templates\t1\images\home\p1.png" />
     <Content Include="Content\templates\t1\images\home\s1.png" />
     <Content Include="Content\templates\t1\images\home\s10.png" />
@@ -548,6 +548,7 @@
     <Content Include="templates\t1\index1.html" />
     <Content Include="templates\t1\index.html" />
     <Content Include="templates\t1\index3.html" />
+    <Content Include="templates\t1\mypage.html" />
     <Content Include="templates\t1\page_2_columns_left.html" />
     <Content Include="templates\t1\page_2_columns_right.html" />
     <Content Include="templates\t1\page_3_columns.html" />
@@ -587,6 +588,7 @@
     <Content Include="templates\t1\portfolio_item.html" />
     <Content Include="templates\t1\portfolio_item1.html" />
     <Content Include="templates\t1\portfolio_text_blocks.html" />
+    <Content Include="templates\t1\temppage.html" />
     <Content Include="templates\t2\test.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
