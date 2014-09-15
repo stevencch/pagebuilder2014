@@ -27,16 +27,19 @@ $(function () {
         }
     });
     //
-    $("#modalEdit").draggable({
-        handle: ".modal-header"
-    });
-    $('.btnEdit').click(function (event) {
-        $('#modalEdit').modal('show');
-        event.stopPropagation();
-    });
-    //
-    $('#btnDelete').click(function (event) {
-        parent.hide();
+    $('#btnImage').click(function (event) {
+        $.get('http://localhost:1555/api/image?query=dog&filter=size:medium&top=300&skip=0',
+            function (data) {
+                var html=''
+                _.each(data, function (item) {
+                    html+="<img style='width:200px' src='" + item + "'/><br/>";
+                });
+                $('#testPanel').html(html);
+                alert('ok');
+            })
+            .fail(function () {
+                alert('fail');
+            });
         event.stopPropagation();
     });
     //
@@ -86,19 +89,19 @@ function dragAndSort() {
     drag();
 }
 
-function getNodeTree(node,tree) {
+function getNodeTree(node, tree) {
     tree.pbnode = node.attr('pbnode');
     tree.tree = [];
-    if (tree.pbnode.substr(0,1)=='s') {
+    if (tree.pbnode.substr(0, 1) == 's') {
         return;
     } else {
         var nodes;
         if (node.children('.sortable').length > 0) {
-            nodes= node.children('.sortable').children('.node');
+            nodes = node.children('.sortable').children('.node');
         } else {
             nodes = node.children('.node');
         }
-        _.each(nodes, function(item) {
+        _.each(nodes, function (item) {
             var child = {};
             tree.tree.push(child);
             getNodeTree($(item), child);

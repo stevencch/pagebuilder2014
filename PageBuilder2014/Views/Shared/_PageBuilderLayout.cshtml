@@ -22,13 +22,14 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li><span id="btnImage">Image</span></li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
+  
     <div class="body-content">
         @RenderBody()
         <hr />
@@ -41,5 +42,6 @@
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/jquery-ui-1.11.1.js"></script>
     @RenderSection("scripts", required: false)
+    <div id="testPanel"></div>
 </body>
 </html>
