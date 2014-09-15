@@ -584,6 +584,7 @@
     <Content Include="templates\t1\portfolio_item.html" />
     <Content Include="templates\t1\portfolio_item1.html" />
     <Content Include="templates\t1\portfolio_text_blocks.html" />
+    <Content Include="templates\t2\test.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
