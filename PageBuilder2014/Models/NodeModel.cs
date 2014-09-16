@@ -24,6 +24,10 @@ namespace PageBuilder2014.Models
             {
                 sb.Append(Content);
             }
+            else if (Type.Equals("br"))
+            {
+                sb.Append("<br/>");
+            }
             else
             {
                 sb.Append("<");

@@ -28,7 +28,7 @@ $(function () {
     });
     //
     $('#btnImage').click(function (event) {
-        $.get('http://localhost:1555/api/image?query=dog&filter=size:medium&top=300&skip=0',
+        $.get('http://localhost:1555/api/image?query=dog&filter=size:medium&top=10&skip=0',
             function (data) {
                 var html=''
                 _.each(data, function (item) {

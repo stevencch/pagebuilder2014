@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace PageBuilder2014.Controllers
@@ -11,6 +15,7 @@ namespace PageBuilder2014.Controllers
     public class ImageController : ApiController
     {
         private const string AccountKey = "ge9khc7oHm0gvbtBr6oJXc5gOIEIi09P35d5LtfnmJo";
+        public static int count=0;
 
         string market = "en-us";
         // GET api/image
@@ -65,7 +70,32 @@ namespace PageBuilder2014.Controllers
                 searchResult.Add(iResult.MediaUrl);
             }
 
+            DownloadImage(searchResult);
+
             return searchResult.ToArray();
         }
+
+        private async void DownloadImage(List<string> urls )
+        {
+            HttpClient client = new HttpClient() { MaxResponseContentBufferSize = 1000000 };
+            IEnumerable<Task> tasks = from url in urls select Download(url,client);
+            Task[] taskarray = tasks.ToArray();
+            await Task.WhenAll(taskarray);
+        }
+
+        private async Task Download(string url, HttpClient client)
+        {
+            try
+            {
+                byte[] byteArray = await client.GetByteArrayAsync(url);
+                int name = Interlocked.Increment(ref ImageController.count);
+                File.WriteAllBytes(HttpContext.Current.Server.MapPath("~/content/images/" + name + ".jpg"), byteArray);
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
     }
 }
