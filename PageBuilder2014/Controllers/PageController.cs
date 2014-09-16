@@ -32,11 +32,8 @@ namespace PageBuilder2014.Controllers
         public void Post(PageLayout pageLayout)
         {
             string file1 =
-                HttpContext.Current.Server.MapPath("~/templates/t1/temppage.html");
-            string file2 =
                 HttpContext.Current.Server.MapPath("~/templates/t1/mypage.html");
             GeneratePage(pageLayout,file1);
-            HtmlHelper.Process(file1,file2);
 
         }
 
@@ -47,7 +44,10 @@ namespace PageBuilder2014.Controllers
             using (StreamWriter sw = new StreamWriter(file))
             {
                 string html = sbBegin.ToString() ;
-                page = page.Replace("[[PAGE]]", html);
+                var node = HtmlHelper.JsonConvert(html);
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(node);
+                string script = @"<script> var pagejson=" + json + ";</script>";
+                page = page.Replace("[[PAGE]]", script+"\r\n"+node.ToString());
                 sw.Write(page);
             }
         }
@@ -60,26 +60,24 @@ namespace PageBuilder2014.Controllers
                     sbBegin.Append("<div class='root'>");
                     break;
                 case "c12":
-                    sbBegin.AppendLine("<div class='row'>");
+                    sbBegin.Append("<div class='row'>");
                     break;
                 case "c6a":
                 case "c6b":
-                    sbBegin.AppendLine("<div class='col-md-6'>");
+                    sbBegin.Append("<div class='col-md-6'>");
                     break;
                 case "c4a":
                 case "c4b":
                 case "c4c":
-                    sbBegin.AppendLine("<div class='col-md-4'>");
+                    sbBegin.Append("<div class='col-md-4'>");
                     break;
                 case "c8a":
                 case "c8b":
-                    sbBegin.AppendLine("<div class='col-md-8'>");
+                    sbBegin.Append("<div class='col-md-8'>");
                     break;
                 default:
                     string html = File.ReadAllText(HttpContext.Current.Server.MapPath("~/content/templates/t1/html/home/"+pageLayout.pbnode+".html"));
-                    sbBegin.AppendLine("<!-- start "+pageLayout.pbnode+"-->");
-                    sbBegin.AppendLine(html);
-                    sbBegin.AppendLine("<!-- end " + pageLayout.pbnode + "-->");
+                    sbBegin.Append(html);
                     break;
             }
             foreach (var item in pageLayout.tree)
@@ -87,7 +85,7 @@ namespace PageBuilder2014.Controllers
                 ProcessLayout(item);
                 if (!item.pbnode.StartsWith("s"))
                 {
-                    sbBegin.AppendLine("</div>");
+                    sbBegin.Append("</div>");
                 }
             }
         }
