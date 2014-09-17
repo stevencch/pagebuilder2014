@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.Remoting.Channels;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 using PageBuilder2014.Helper;
@@ -77,7 +78,7 @@ namespace PageBuilder2014.Controllers
                     break;
                 default:
                     string html = File.ReadAllText(HttpContext.Current.Server.MapPath("~/content/templates/t1/html/home/"+pageLayout.pbnode+".html"));
-                    sbBegin.Append(html);
+                    sbBegin.Append(CleanUp(html));
                     break;
             }
             foreach (var item in pageLayout.tree)
@@ -88,6 +89,15 @@ namespace PageBuilder2014.Controllers
                     sbBegin.Append("</div>");
                 }
             }
+        }
+
+        private string CleanUp(string html)
+        {
+            html = Regex.Replace(html, "<!--.*-->", "");
+            html = Regex.Replace(html, @"\r\n", "");
+            html = Regex.Replace(html, "[ ]+<", "<");
+            html = Regex.Replace(html, ">[ ]+", ">");
+            return html;
         }
 
         // PUT: api/Page/5

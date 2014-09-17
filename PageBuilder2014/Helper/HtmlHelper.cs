@@ -13,7 +13,7 @@ namespace PageBuilder2014.Helper
     {
         static StringBuilder newHtml = new StringBuilder();
         static string html = "";
-        static int count = 0;
+        static int count = 1;
         static bool isGroup = false;
         static bool isLi = false;
 
@@ -120,7 +120,7 @@ namespace PageBuilder2014.Helper
             
 
             node.Type = html.Name;
-            if ((html.Name.Equals("li") && !parent.Attributes.Select(x => x.Key).Contains("noGroup")))
+            if ((html.Name.Equals("li") && !parent.Attributes.Select(x => x.Key).Contains("nogroup")))
             {
                 count--;
                 if (!parent.Attributes.Select(x => x.Key).Contains("tId"))
