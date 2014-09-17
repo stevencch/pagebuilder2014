@@ -13,7 +13,9 @@ namespace PageBuilder2014.Helper
     {
         static StringBuilder newHtml = new StringBuilder();
         static string html = "";
-        static int count = 1;
+        static int count = 0;
+        static bool isIncrease = true;
+        static NodeModel groupNode = null;
         static bool isGroup = false;
         static bool isLi = false;
 
@@ -120,26 +122,13 @@ namespace PageBuilder2014.Helper
             
 
             node.Type = html.Name;
-            if ((html.Name.Equals("li") && !parent.Attributes.Select(x => x.Key).Contains("nogroup")))
-            {
-                count--;
-                if (!parent.Attributes.Select(x => x.Key).Contains("tId"))
-                {
-                    parent.Attributes.Add(new AttributeModel() { Key = "tId", Value = GetTextKey().Substring(0, 2) });
-                }
-            }
-            //if (html.Name.Equals("br") || (html.Name.Equals("li") && !parent.Attributes.Select(x => x.Key).Contains("noGroup")))
-            if (html.Name.Equals("br"))
-            {
-                count--;
-                if (!parent.Attributes.Select(x => x.Key).Contains("tId"))
-                {
-                    parent.Attributes.Add(new AttributeModel() { Key = "tId", Value = GetTextKey().Substring(0, 2) });
-                }
-            }
             if (html.Name.Equals("#text"))
             {
-                count++;
+                if (isIncrease)
+                {
+                    count++;
+                }
+                
                 //node.Content = html.InnerText;
                 StringBuilder newHtml = new StringBuilder();
                 int j = 0;
@@ -162,9 +151,22 @@ namespace PageBuilder2014.Helper
             node.Children = new List<NodeModel>();
             foreach (var item in html.ChildNodes)
             {
+                var group = node.Attributes.Where(x => x.Key.Equals("group")).FirstOrDefault();
+                if (isIncrease && group != null)
+                {
+                    groupNode = node;
+                    isIncrease = false;
+                    count++;
+                    group.Value = GetTextKey();
+                }
+
                 NodeModel child = new NodeModel();
                 node.Children.Add(child);
                 ConvertTemplate(item, child, node);
+            }
+            if (!isIncrease && (groupNode == node))
+            {
+                isIncrease = true;
             }
         }
 
