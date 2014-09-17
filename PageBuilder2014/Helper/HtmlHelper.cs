@@ -117,13 +117,22 @@ namespace PageBuilder2014.Helper
 
         private static void ConvertTemplate(HtmlNode html, NodeModel node, NodeModel parent)
         {
+            int first = 65 + (int)(count / 26);
+            int second = 65 + (count % 26);
+            string replaces = new StringBuilder().Append((char)first).Append((char)second).Append(' ').ToString();
+
             node.Type = html.Name;
+            //if (html.Name.Equals("br") || (html.Name.Equals("li") && !parent.Attributes.Select(x => x.Key).Contains("noGroup")))
+                if (html.Name.Equals("br") )
+            {
+                count--;
+                if (!parent.Attributes.Select(x => x.Key).Contains("tId"))
+                {
+                    parent.Attributes.Add(new AttributeModel() { Key = "tId", Value = replaces.Substring(0, 2) });
+                }
+            }
             if (html.Name.Equals("#text"))
             {
-
-                int first = 65 + (int)(count / 26);
-                int second = 65 + (count % 26);
-                string replaces = new StringBuilder().Append((char)first).Append((char)second).Append(' ').ToString();
                 count++;
                 //node.Content = html.InnerText;
                 StringBuilder newHtml = new StringBuilder();
