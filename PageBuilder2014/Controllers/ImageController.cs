@@ -98,12 +98,27 @@ namespace PageBuilder2014.Controllers
 
         private async Task Download(string url, HttpClient client,string query)
         {
+            try
+            {
+                client.GetByteArrayAsync(url).ContinueWith(t =>
+                {
+                    try
+                    {
+                        int name = Interlocked.Increment(ref ImageController.count);
+                        File.WriteAllBytes(ImageController.Path + "/content/images/" + query + "/" + name + ".jpg",
+                            t.Result);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("fail1:" + ex.StackTrace);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("fail1:"+ex.StackTrace);
+            }
 
-            client.GetByteArrayAsync(url).ContinueWith(t=>{
-                int name = Interlocked.Increment(ref ImageController.count);
-                File.WriteAllBytes(ImageController.Path+"/content/images/"+query+"/"+ name + ".jpg", t.Result);
-            }) ;
-            
 
         }
 

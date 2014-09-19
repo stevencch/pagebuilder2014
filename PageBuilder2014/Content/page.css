@@ -1,3 +1,14 @@
 ﻿.pageToolBar {
     margin-bottom:50px;
 }
+
+.resultImage {
+    float: left;
+    margin: 5px;
+}
+
+@media screen and (min-width: 768px) {
+    #pbImageModal .modal-dialog{
+        width: 800px;
+    }
+}
