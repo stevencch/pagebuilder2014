@@ -26,33 +26,74 @@
     <!-- CSS Theme -->
     <link rel="stylesheet" href="assets/css/themes/default.css" id="style_color">
     <link rel="stylesheet" href="assets/css/themes/headers/default.css" id="style_color-header-1">
+
+    <link href="/Content/summernote.css" rel="stylesheet" />
+    <link rel="stylesheet" href=/Content/page.css">
 </head>
 
-    <body>
-        [[PAGE]]
-        <!-- JS Global Compulsory -->
-        <script type="text/javascript" src="assets/plugins/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.min.js"></script>
-        <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="assets/plugins/hover-dropdown.min.js"></script>
-        <!-- JS Implementing Plugins -->
-        <script type="text/javascript" src="assets/plugins/flexslider/jquery.flexslider-min.js"></script>
-        <script type="text/javascript" src="assets/plugins/parallax-slider/js/modernizr.js"></script>
-        <script type="text/javascript" src="assets/plugins/parallax-slider/js/jquery.cslider.js"></script>
-        <!-- JS Page Level -->
-        <script type="text/javascript" src="assets/js/app.js"></script>
-        <script type="text/javascript" src="assets/js/pages/index.js"></script>
-        <script type="text/javascript">
-            jQuery(document).ready(function () {
-                App.init();
-                App.initSliders();
-                Index.initParallaxSlider();
-            });
-        </script>
-        <!--[if lt IE 9]>
-            <script src="assets/plugins/respond.js"></script>
-        <![endif]-->
+<body>
+    <!--Tool Bar-->
+    <div class="pageToolBar">
+        <div class="navbar navbar-inverse  navbar-static-top">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" id="btnEditText">Edit Text</a></li>
+                        <li><a href="#" id="btnEidtImage">Edit Image</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    [[PAGE]]
+    <!-- Modal -->
+    <div class="modal fade" id="pbTextModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="textKey" placeholder="Enter Key">
+                        </div>
+                        <div class="form-group">
+                            <div id="textEditor"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnTextSave">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-    </body>
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="/Scripts/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/hover-dropdown.min.js"></script>
+    <!-- JS Implementing Plugins -->
+    <script type="text/javascript" src="assets/plugins/flexslider/jquery.flexslider-min.js"></script>
+    <script type="text/javascript" src="assets/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="assets/plugins/parallax-slider/js/jquery.cslider.js"></script>
+    <!-- JS Page Level -->
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/pages/index.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            App.init();
+            App.initSliders();
+            Index.initParallaxSlider();
+        });
+    </script>
+    <!--[if lt IE 9]>
+        <script src="assets/plugins/respond.js"></script>
+    <![endif]-->
+    <script src="/Scripts/summernote.js"></script>
+    <script src="/Scripts/page.js"></script>
+</body>
 </html>

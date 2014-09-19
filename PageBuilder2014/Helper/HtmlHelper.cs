@@ -127,6 +127,7 @@ namespace PageBuilder2014.Helper
                 if (isIncrease)
                 {
                     count++;
+                    parent.Attributes.Add(new AttributeModel() { Key = "pbid", Value = GetTextKey().Substring(0, 2) });
                 }
                 
                 //node.Content = html.InnerText;
@@ -145,9 +146,14 @@ namespace PageBuilder2014.Helper
                     newHtml.Append(GetTextKey()[j]);
                 }
                 node.Content = newHtml.ToString();
-                parent.Attributes.Add(new AttributeModel() { Key = "tId", Value = GetTextKey().Substring(0, 2) });
+                
             }
             node.Attributes = html.Attributes.Select(x => new AttributeModel() { Key = x.Name, Value = x.Value }).ToList();
+            var href=node.Attributes.Where(x => x.Key.Equals("href")).FirstOrDefault();
+            if (node.Type == "a" && href!=null)
+            {
+                href.Value = "javascript:void(0)";
+            }
             node.Children = new List<NodeModel>();
             foreach (var item in html.ChildNodes)
             {
@@ -157,7 +163,8 @@ namespace PageBuilder2014.Helper
                     groupNode = node;
                     isIncrease = false;
                     count++;
-                    group.Value = GetTextKey();
+                    group.Value = GetTextKey().Substring(0, 2);
+                    node.Attributes.Add(new AttributeModel() { Key = "pbid", Value = GetTextKey().Substring(0, 2) });
                 }
 
                 NodeModel child = new NodeModel();

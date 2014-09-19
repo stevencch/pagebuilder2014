@@ -201,6 +201,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\pagebuilder.css" />
+    <Content Include="Content\summernote.css" />
     <Content Include="Content\templates\t1\html\home\p1.html" />
     <Content Include="Content\templates\t1\html\home\s0101.html" />
     <Content Include="Content\templates\t1\html\home\s0107.html" />
@@ -283,15 +284,18 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\page.js" />
     <Content Include="Scripts\pagebuilder.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\summernote.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="templates\t1\assets\css\app.css" />
     <Content Include="templates\t1\assets\css\headers\header1.css" />
     <Content Include="templates\t1\assets\css\headers\header2.css" />
+    <Content Include="Content\page.css" />
     <Content Include="templates\t1\assets\css\pages\blog.css" />
     <Content Include="templates\t1\assets\css\pages\page_404_error.css" />
     <Content Include="templates\t1\assets\css\pages\page_404_error1.css" />
