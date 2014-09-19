@@ -22,6 +22,7 @@ namespace PageBuilder2014.Controllers
         // GET api/image
         public IEnumerable<string> Get(string query, string filter, int top, int skip)
         {
+            ImageController.count = 0;
             return this.Search(query, filter, top, skip);
         }
 
@@ -65,33 +66,42 @@ namespace PageBuilder2014.Controllers
             // Run the query and display the results.
             var imageResults = imageQuery.Execute();
             List<string> searchResult = new List<string>();
+            List<string> imageResult = new List<string>();
 
+            int count = 0;
             foreach (Bing.ImageResult iResult in imageResults)
             {
                 searchResult.Add(iResult.MediaUrl);
+                count++;
+                imageResult.Add("/content/images/" + query + "/" + count + ".jpg");
             }
 
-            DownloadImage(searchResult);
+            if (!Directory.Exists(ImageController.Path + "/content/images/" + query))
+            {
+                Directory.CreateDirectory(ImageController.Path + "/content/images/" + query);
+            }
+
+            DownloadImage(searchResult,query);
 
 
-            return searchResult.ToArray();
+            return imageResult.ToArray();
         }
 
 
-        private void DownloadImage(List<string> urls)
+        private void DownloadImage(List<string> urls,string query)
         {
             HttpClient client = new HttpClient() { MaxResponseContentBufferSize = 1000000 };
-            IEnumerable<Task> tasks = from url in urls select Download(url, client);
+            IEnumerable<Task> tasks = from url in urls select Download(url, client,query);
             Task[] taskarray = tasks.ToArray();
             Task.WaitAll(taskarray);
         }
 
-        private async Task Download(string url, HttpClient client)
+        private async Task Download(string url, HttpClient client,string query)
         {
 
             client.GetByteArrayAsync(url).ContinueWith(t=>{
                 int name = Interlocked.Increment(ref ImageController.count);
-                File.WriteAllBytes(ImageController.Path+"/content/images/" + name + ".jpg", t.Result);
+                File.WriteAllBytes(ImageController.Path+"/content/images/"+query+"/"+ name + ".jpg", t.Result);
             }) ;
             
 

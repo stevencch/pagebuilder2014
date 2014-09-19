@@ -76,10 +76,37 @@ $(document).ready(function () {
             getEditText(currentNode);
         }
         $('#textEditor').code(editText);
+        $("#textKey").val(pbid);
         $('#pbTextModal').modal({
             backdrop: false,
             show: true
         });
+    });
+
+    $("img").click(function () {
+        $('#imageKey').attr('src', $(this).attr('src'));
+        $('#pbImageModal').modal({
+            backdrop: false,
+            show: true
+        });
+    });
+
+    $('#btnSearch').click(function (event) {
+        $.get('http://localhost:1555/api/image?query='+$('#textSearch').val()+'&filter=size:medium&top=20&skip=60',
+            function (data) {
+                resultList = ''
+                _.each(data, function (item) {
+                    resultList += "<img style='width:100px' src='" + item + "'/><br/>";
+                });
+                alert('ok');
+                setTimeout(function () {
+                    $('#searchPanel').html(resultList);
+                },5000)
+            })
+            .fail(function () {
+                alert('fail');
+            });
+        event.stopPropagation();
     });
 });
 
