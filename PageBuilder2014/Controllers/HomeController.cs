@@ -10,7 +10,7 @@ namespace PageBuilder2014.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return Redirect("/index.php");
         }
 
         public ActionResult About()

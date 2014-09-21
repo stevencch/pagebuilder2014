@@ -125,7 +125,7 @@ $(document).ready(function () {
     });
     $('#btnSearch').click(function (event) {
         $('#btnSearch').html("Loading...");
-        $.get('http://localhost:1555/api/image?query='+$('#textSearch').val()+'&filter=size:medium&top=20&skip=60',
+        $.get('/api/image?query='+$('#textSearch').val()+'&filter=size:medium&top=20&skip=60',
             function (data) {
                 resultList = '<div class="clearfix">';
                 var count = 0;
