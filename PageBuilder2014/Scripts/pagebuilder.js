@@ -1,7 +1,7 @@
 ﻿var sortable;
 var draggable;
 var parentDom;
-var domCount = 0;
+var pbuid = 0;
 var uid;
 var data = [];
 var selectedNode = null;
@@ -18,29 +18,27 @@ $(function () {
         if ($(this).hasClass("pbRoot")) {
             $('.pgPagePanel .node').removeClass('pgSelected');
             selectedNode.addClass('pgSelected');
-            selectedNode = null;
+            
         } else {
-            if (selectedNode == null) {
+            if (selectedNode == null && $(this).hasClass('row')) {
                 selectedNode = $(this);
                 uid = $(this).attr('uid');
-                parent = $(this).parent();
             }
         }
     });
     //
-    $('#btnImage').click(function (event) {
-        $.get('http://localhost:1555/api/image?query=dog&filter=size:medium&top=2&skip=60',
-            function (data) {
-                var html=''
-                _.each(data, function (item) {
-                    html+="<img style='width:200px' src='" + item + "'/><br/>";
-                });
-                $('#testPanel').html(html);
-                alert('ok');
-            })
-            .fail(function () {
-                alert('fail');
-            });
+    $('#btnDelete').click(function (event) {
+        if (selectedNode != null) {
+            draggable.draggable("destroy");
+            sortable.sortable("destroy");
+            selectedNode.remove();
+            selectedNode = null;
+            sortable = $(".pgPagePanel .sortable");
+            sort();
+            draggable = $(".draggable");
+            drag();
+            
+        }
         event.stopPropagation();
     });
     //
@@ -106,9 +104,9 @@ function sort() {
     sortable.sortable({
         revert: true,
         stop: function (event, ui) {
-            domCount++;
+            pbuid++;
             if (ui.item.attr('pbnode').substr(0, 1) == 's') {
-                ui.item.attr('uid', domCount);
+                ui.item.attr('uid', pbuid);
             }
         }
     });
@@ -155,6 +153,9 @@ function getNodeTree(node, tree) {
 }
 
 function displayLayout(layout) {
+    if (parseInt(layout.uid) > pbuid) {
+        pbuid = parseInt(layout.uid);
+    }
     switch(layout.pbnode) {
         case 'root':
             treeHtml += '<div class="node pbRoot" pbnode="'+layout.pbnode+'"><div class="plPage">PAGE TOP</div><div class="sortable">';
