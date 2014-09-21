@@ -1,11 +1,22 @@
-﻿.pageToolBar {
-    margin-bottom:50px;
+﻿
+.root {
+    margin-top: 80px;
 }
 
 .resultImage {
     float: left;
     margin: 5px;
 }
+
+#searchPanel {
+    overflow-y: scroll;
+    height: 250px;
+}
+
+#searchPanel img {
+    cursor: pointer;
+}
+
 
 @media screen and (min-width: 768px) {
     #pbImageModal .modal-dialog{

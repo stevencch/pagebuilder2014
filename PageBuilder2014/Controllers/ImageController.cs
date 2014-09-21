@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -68,6 +69,8 @@ namespace PageBuilder2014.Controllers
             List<string> searchResult = new List<string>();
             List<string> imageResult = new List<string>();
 
+            query = Regex.Replace(query, "[^A-Za-z0-9]", "_");
+
             int count = 0;
             foreach (Bing.ImageResult iResult in imageResults)
             {
@@ -75,6 +78,7 @@ namespace PageBuilder2014.Controllers
                 count++;
                 imageResult.Add("/content/images/" + query + "/" + count + ".jpg");
             }
+
 
             if (!Directory.Exists(ImageController.Path + "/content/images/" + query))
             {

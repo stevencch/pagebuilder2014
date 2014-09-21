@@ -10,7 +10,7 @@ namespace PageBuilder2014.Models
     {
         public string Type { get; set; }
 
-        public String Content { get; set; }
+        public string Content { get; set; }
 
         public List<NodeModel> Children { get; set; }
 
@@ -51,8 +51,6 @@ namespace PageBuilder2014.Models
                 sb.Append(">");
             }
             
-            sb.AppendLine();
-
             return sb.ToString();
 
         }

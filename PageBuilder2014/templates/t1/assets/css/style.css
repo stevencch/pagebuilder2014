@@ -50,7 +50,7 @@
 .purchase p {
 	margin-bottom: 0;
 }
-.purchase span {
+.purchase span.pbspan {
 	color: #666;
 	display: block;
 	font-size: 28px;
@@ -143,7 +143,7 @@
 	display: block;
 }
 
-.recent-work a span {
+.recent-work a span.pbspan {
 	display: block;
 	padding: 10px;
 	border-bottom: solid 2px #eee;
@@ -175,7 +175,7 @@
    transform: scale(1.2) rotate(3deg);
 }
 
-.recent-work a:hover span {
+.recent-work a:hover span.pbspan {
 	border-bottom: solid 2px #72c02c;
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
@@ -298,7 +298,7 @@ blockquote:hover {
 	padding: 0 0;
 	margin-bottom: 7px; 
 }
-.footer .blog-list li span {
+.footer .blog-list li span.pbspan {
 	color: #818488;
 }
 
@@ -600,7 +600,7 @@ a.thumbnail {
 	margin-top: 18px;
 }
 
-.testimonials .testimonial-info span {
+.testimonials .testimonial-info span.pbspan {
 	top: 3px;
 	position: relative;
 }
@@ -1083,7 +1083,7 @@ ul.blog-tags a:hover i {
 	border-top-color: #72c02c;	
 }
 
-.blog-twitter .blog-twitter-inner span {
+.blog-twitter .blog-twitter-inner span.pbspan {
 	color: #777;
 	display: block;
 	font-size: 11px; 
@@ -1149,21 +1149,21 @@ ul.blog-tags a:hover i {
 	color: #555;
 }
 
-.sidebar-nav-v1 span.badge {
+.sidebar-nav-v1 span.pbspan.badge {
 	margin-top: 10px;
 	margin-right: 10px;
 }
 
-.sidebar-nav-v1 span.badge-green {
+.sidebar-nav-v1 span.pbspan.badge-green {
 	background: #2ecc71;
 }
-.sidebar-nav-v1 span.badge-red {
+.sidebar-nav-v1 span.pbspan.badge-red {
 	background: #e74c3c;
 }
-.sidebar-nav-v1 span.badge-blue {
+.sidebar-nav-v1 span.pbspan.badge-blue {
 	background: #3498db;
 }
-.sidebar-nav-v1 span.badge-sea {
+.sidebar-nav-v1 span.pbspan.badge-sea {
 	background: #1abc9c;
 }
 
@@ -1213,7 +1213,7 @@ ul.blog-tags a:hover i {
 	border: dashed 1px #ccc;
 }
 
-.tag-box-v5 span {
+.tag-box-v5 span.pbspan {
 	color: #555;
 	font-size: 28px;
 	margin-bottom: 0;
@@ -1320,7 +1320,7 @@ ul.blog-tags a:hover i {
 	background: url(../img/bg-black.png) repeat;
 }
 
-.slider-promo-info span.big-size { 
+.slider-promo-info span.pbspan.big-size { 
 	color: #fff;
 	display: block;
 	font-size: 30px;

@@ -9,6 +9,8 @@ namespace PageBuilder2014.Models
     {
         public string pbnode { get; set; }
 
+        public string uid { get; set; }
+
         public List<PageLayout> tree { get; set; }
     }
 }

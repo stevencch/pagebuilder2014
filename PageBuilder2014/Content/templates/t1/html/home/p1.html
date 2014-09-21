@@ -26,21 +26,24 @@
     <!-- CSS Theme -->
     <link rel="stylesheet" href="assets/css/themes/default.css" id="style_color">
     <link rel="stylesheet" href="assets/css/themes/headers/default.css" id="style_color-header-1">
-    
+
     <link href="/Content/themes/base/all.css" rel="stylesheet" />
     <link href="/Content/summernote.css" rel="stylesheet" />
     <link rel="stylesheet" href="/Content/page.css">
+
+    <link rel="stylesheet" href="assets/css/pb.css">
 </head>
 
 <body>
     <!--Tool Bar-->
     <div class="pageToolBar">
-        <div class="navbar navbar-inverse  navbar-static-top">
+        <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="#" id="btnEditText">Edit Text</a></li>
                         <li><a href="#" id="btnEidtImage">Edit Image</a></li>
+                        <li><a href="#" id="btnSavePage">Save Page</a></li>
                     </ul>
                 </div>
             </div>
@@ -53,7 +56,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel">EDIT TEXT</h4>
                 </div>
                 <div class="modal-body">
                     <form role="form">
@@ -78,24 +81,28 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel">EDIT IMAGE</h4>
                 </div>
                 <div class="modal-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <img style="width:300px;" id="imageKey" />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form role="form">
+                                <div class="form-group">
+                                    <img style="width:200px;" id="imageKey" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="textSearch" placeholder="Search">
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary btn-sm" id="btnSearch">Search</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="textSearch" placeholder="Search">
-                            </div>
-                            <div class="col-sm-4">
-                                <button type="button" class="btn btn-primary" id="btnSearch">Search</button>
-                            </div>
+                        <div class="col-md-8">
                             <div id="searchPanel" class="clearfix"></div>
-
                         </div>
-                    </form>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="btnTextSave">Save</button>

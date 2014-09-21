@@ -1,1 +1,5 @@
-﻿
+﻿.oneline {
+    clear: both;
+    float: left;
+    margin: 1px 0;
+}

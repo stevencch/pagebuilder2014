@@ -1,10 +1,18 @@
-﻿var currentNode=null;
+﻿if (!String.prototype.trim) {
+    String.prototype.trim = function () {
+        return this.replace(/^[\s\xA0]+|[\s\xA0]+$/g, '');
+    };
+}
+
+var currentNode = null;
 var isFound = false;
 var editText = '';
 var pbid = null;
+var imgid = null;
 var newContent = '';
 var tempContent = '';
 var currentImage = null;
+var currentText = null;
 
 $(document).ready(function () {
     $("#pbTextModal").draggable({
@@ -21,21 +29,32 @@ $(document).ready(function () {
         });
         event.stopPropagation();
     });
+    $('#btnSavePage').click(function (event) {
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: '/api/page/save',
+            data: JSON.stringify(pagejson),
+            contentType: "application/json; charset=utf-8"
+        }).done(function () {
+            alert('ok');
+        }).fail(function () {
+            alert('fail');
+        });
+        event.stopPropagation();
+    });
     $('#btnTextSave').click(function () {
         var content=$('#textEditor').code();
-        var html=$(content);
+        var html = $(content);
+        updateAttribute(currentNode, 'isedit', 'true');
         if (currentNode.Children.length > 1) {
             if (html.length == 0) {
                 currentNode.Children = [];
-                $("*[pbid='" + pbid + "'").html('');
+                currentText.html('');
             }
             else {
                 newContent = '';
-                var lineBreak=''
                 var firstChild = currentNode.Children[0];
-                if (firstChild.Type != 'li') {
-                    lineBreak='<br/>';
-                }
                 currentNode.Children = [];
                 for (var i = 0; i < html.length; i++) {
                     var newNode = $.extend(true, {}, firstChild);
@@ -47,35 +66,39 @@ $(document).ready(function () {
                     for (var j = 0; j < currentNode.Children.length; j++) {
                         tempContent = '';
                         getHtml(currentNode.Children[j]);
-                        newContent += tempContent + lineBreak;
+                        newContent += tempContent;
                     }
                 }
-                $("*[pbid='" + pbid + "'").html(newContent);
+                currentText.html(newContent);
             }
         }
         else {
             if (html.length == 0) {
-                currentNode.Content = '';
-                $("*[pbid='" + pbid + "'").html('');
+                currentNode.Children[0].Content = '';
+                currentText.html('');
             }
             else if (html.length == 1) {
-                currentNode.Content = html.html();
-                $("*[pbid='" + pbid + "'").html(html.html());
+                currentNode.Children[0].Content = html.html();
+                currentText.html(html.html());
             }
             else {
                 newContent = '';
                 for (var i = 0; i < html.length; i++) {
                     newContent += $(html[i]).html();
+                    
                     if (i != html.length - 1) {
-                        newContent += '<br/>';
+                        if (!(i == html.length - 2 && $(html[i+1]).html().trim()=='')) {
+                            newContent += '<br/>';
+                        }
                     }
                 }
-                currentNode.Content = newContent;
-                $("*[pbid='" + pbid + "'").html(newContent);
+                currentNode.Children[0].Content = newContent;
+                currentText.html(newContent);
             }
         }
     });
-    $("*[pbid]").click(function () {
+    $("*[pbid]").click(function (event) {
+        currentText = $(this);
         pbid=$(this).attr('pbid');
         searchNode(pagejson, 'pbid', pbid);
         if (currentNode != null) {
@@ -88,26 +111,35 @@ $(document).ready(function () {
             backdrop: false,
             show: true
         });
+        event.stopPropagation();
     });
-
-    $("img").click(function () {
+    $("*[imgid]").click(function () {
         currentImage = $(this);
+        imgid = $(this).attr('imgid');
+        searchNode(pagejson, 'imgid', imgid);
         $('#imageKey').attr('src', $(this).attr('src'));
         $('#pbImageModal').modal({
             backdrop: false,
             show: true
         });
     });
-
     $('#btnSearch').click(function (event) {
+        $('#btnSearch').html("Loading...");
         $.get('http://localhost:1555/api/image?query='+$('#textSearch').val()+'&filter=size:medium&top=20&skip=60',
             function (data) {
-                resultList = ''
+                resultList = '<div class="clearfix">';
+                var count = 0;
                 _.each(data, function (item) {
+                    count++;
                     resultList += "<img class='resultImage' style='width:100px' src='" + item + "'/>";
+                    if (count % 4 == 0) {
+                        resultList += '</div><div class="clearfix">';
+                    }
                 });
+                resultList += '</div>';
                 setTimeout(function() {
                     $('#searchPanel').html(resultList);
+                    $('#btnSearch').html("Search");
                 }, 5000);
             })
             .fail(function () {
@@ -115,9 +147,12 @@ $(document).ready(function () {
             });
         event.stopPropagation();
     });
-
     $('#searchPanel').delegate(".resultImage", 'click', function() {
         currentImage.attr("src", $(this).attr("src"));
+        var src=_.find(currentNode.Attributes, function(item) {
+            return item.Key == 'src';
+        });
+        src.Value = $(this).attr("src");
     });
 });
 
@@ -156,7 +191,8 @@ function updateChildNode(node, text) {
 
 function getEditText(node) {
     if (node.Type == '#text') {
-        editText += '<p>' + node.Content + '</p>';
+        var content = node.Content.replace(/<br.>/g, '</p><p>');
+        editText += '<p>' + content + '</p>';
     }
     if (node.Children) {
         for (var j = 0; j < node.Children.length; j++) {
@@ -187,5 +223,16 @@ function searchNode(node, attr, value) {
                 break;
             }
         }
+    }
+}
+
+function updateAttribute(node, key, value) {
+    var attr=_.find(node.Attributes, function(item) {
+        return item.Key == key;
+    });
+    if (attr) {
+        attr.Value = value;
+    } else {
+        node.Attributes.push({ Key: key, Value: value });
     }
 }

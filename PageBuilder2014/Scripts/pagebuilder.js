@@ -6,6 +6,7 @@ var uid;
 var data = [];
 var selectedNode = null;
 var nodeTree = {};
+var treeHtml = '';
 $(function () {
     sortable = $(".pgPagePanel .sortable");
     draggable = $(".pgToolbar .draggable").not(".ui-draggable");
@@ -58,6 +59,47 @@ $(function () {
         });
         event.stopPropagation();
     });
+    
+    $('#btnNew').click(function (event) {
+        getNodeTree($('.pbRoot'), nodeTree);
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: '/api/page/new',
+            data: JSON.stringify({action:'new'}),
+            contentType: "application/json; charset=utf-8"
+        }).done(function () {
+            alert('ok');
+        }).fail(function () {
+            alert('fail');
+        });
+        event.stopPropagation();
+    });
+    
+    $('#btnReload').click(function (event) {
+        getNodeTree($('.pbRoot'), nodeTree);
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: '/api/page/reload',
+            data: JSON.stringify({ action: 'reload' }),
+            contentType: "application/json; charset=utf-8"
+        }).done(function (data) {
+            draggable.draggable("destroy");
+            sortable.sortable("destroy");
+            treeHtml = '';
+            displayLayout(data);
+            $('.pgPagePanel').html(treeHtml);
+            sortable = $(".pgPagePanel .sortable");
+            draggable = $(".draggable");
+            sort();
+            drag();
+            alert('ok');
+        }).fail(function () {
+            alert('fail');
+        });
+        event.stopPropagation();
+    });
 });
 
 function sort() {
@@ -65,7 +107,9 @@ function sort() {
         revert: true,
         stop: function (event, ui) {
             domCount++;
-            ui.item.find('.node').attr('uid', domCount);
+            if (ui.item.attr('pbnode').substr(0, 1) == 's') {
+                ui.item.attr('uid', domCount);
+            }
         }
     });
 }
@@ -91,6 +135,7 @@ function dragAndSort() {
 
 function getNodeTree(node, tree) {
     tree.pbnode = node.attr('pbnode');
+    tree.uid = node.attr('uid')?node.attr('uid'):'0';
     tree.tree = [];
     if (tree.pbnode.substr(0, 1) == 's') {
         return;
@@ -107,4 +152,52 @@ function getNodeTree(node, tree) {
             getNodeTree($(item), child);
         });
     }
+}
+
+function displayLayout(layout) {
+    switch(layout.pbnode) {
+        case 'root':
+            treeHtml += '<div class="node pbRoot" pbnode="'+layout.pbnode+'"><div class="plPage">PAGE TOP</div><div class="sortable">';
+            break;
+        case 'c12':
+            treeHtml += '<div class="row draggable node" pbnode="' + layout.pbnode + '">';
+            break;
+        case 'c6a':
+        case 'c6b':
+        case 'c4a':
+        case 'c4b':
+        case 'c4c':
+        case 'c8a':
+        case 'c8b':
+            treeHtml += '<div pbnode="' + layout.pbnode + '" class="col-xs-' + layout.pbnode.substr(1,1) + ' node"><div class="plSectionPage">SECTION TOP</div><div class="sortable">';
+            break;
+        default:
+            treeHtml += '<div class="row draggable node" pbnode="' + layout.pbnode + '" uid="' + layout.uid + '"><img src="/Content/templates/t1/images/home/' + layout.pbnode + '.png" alt=""></div>';
+            break;
+    }
+    for (var i = 0; i < layout.tree.length; i++) {
+        displayLayout(layout.tree[i]);
+    }
+
+    switch(layout.pbnode) {
+        case 'root':
+            treeHtml += '</div><div class="plPage">PAGE BOTTOM</div></div>';
+            break;
+        case 'c12':
+            treeHtml += '</div>';
+            break;
+        case 'c6a':
+        case 'c6b':
+        case 'c4a':
+        case 'c4b':
+        case 'c4c':
+        case 'c8a':
+        case 'c8b':
+            treeHtml += '</div><div class="plSectionPage">SECTION BOTTOM</div></div>';
+            break;
+        default:
+            break;
+            
+    }
+    
 }
