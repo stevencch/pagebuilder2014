@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <title>Unify | Welcome...</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- CSS Global Compulsory-->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/headers/header1.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="assets/plugins/flexslider/flexslider.css">
+    <link rel="stylesheet" href="assets/plugins/parallax-slider/css/parallax-slider.css">
+    <!-- CSS Theme -->
+    <link rel="stylesheet" href="assets/css/themes/default.css" id="style_color">
+    <link rel="stylesheet" href="assets/css/themes/headers/default.css" id="style_color-header-1">
+
+    <link href="/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="/Content/summernote.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Content/page.css">
+
+    <link rel="stylesheet" href="assets/css/pb.css">
+</head>
+
+<body>
+    <!--Tool Bar-->
+    <div class="pageToolBar">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" id="btnEditText">Edit Text</a></li>
+                        <li><a href="#" id="btnEidtImage">Edit Image</a></li>
+                        <li><a href="#" id="btnSavePage">Save Page</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="root"  uid="-99" ><div class="node"  uid="2" ><div class="container" ><div class="row" ><div class="headline" ><h2 pbid="AB"  isedit="true"  pbid="AB" >AB ABbbbbb</h2></div></div></div></div><div class="node"  uid="1" ><div class="purchase" ><div class="container" ><div class="row" ><div class="col-md-9" ><span class="pbspan"  pbid="AB"  isedit="true"  pbid="AC"  pbid="AC" >AB AB AB AB AB AB AB AB bbbbbb</span><p pbid="AC"  pbid="AD"  pbid="AD" >AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD</p></div><div class="col-md-3" ><a href="javascript:void(0)"  class="btn-buy hover-effect"  pbid="AD"  pbid="AE"  pbid="AE" >AE AE AE </a></div></div></div></div></div></div>
+    <!-- Modal -->
+    <div class="modal fade" id="pbTextModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">EDIT TEXT</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="textKey" placeholder="Enter Key">
+                        </div>
+                        <div class="form-group">
+                            <div id="textEditor"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnTextSave">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="pbImageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">EDIT IMAGE</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form role="form">
+                                <div class="form-group">
+                                    <img style="width:200px;" id="imageKey" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="textSearch" placeholder="Search">
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary btn-sm" id="btnSearch">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="searchPanel" class="clearfix"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnTextSave">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Global Compulsory -->
+    <script src="/Scripts/underscore.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-2.1.1.js"></script>
+    <script src="/Scripts/jquery-ui-1.11.1.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/hover-dropdown.min.js"></script>
+    <!-- JS Implementing Plugins -->
+    <script type="text/javascript" src="assets/plugins/flexslider/jquery.flexslider-min.js"></script>
+    <script type="text/javascript" src="assets/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="assets/plugins/parallax-slider/js/jquery.cslider.js"></script>
+    <!-- JS Page Level -->
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/pages/index.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            App.init();
+            App.initSliders();
+            Index.initParallaxSlider();
+        });
+    </script>
+    <!--[if lt IE 9]>
+        <script src="assets/plugins/respond.js"></script>
+    <![endif]-->
+    <script src="/Scripts/summernote.js"></script>
+    <script src="/Scripts/page.js"></script>
+</body>
+</html>

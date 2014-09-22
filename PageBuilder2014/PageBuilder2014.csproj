@@ -555,6 +555,7 @@
     <Content Include="templates\t1\feature_testimonials.html" />
     <Content Include="templates\t1\feature_thumbails.html" />
     <Content Include="templates\t1\feature_typography.html" />
+    <Content Include="templates\t1\finalpage.html" />
     <Content Include="templates\t1\index2.html" />
     <Content Include="templates\t1\index1.html" />
     <Content Include="templates\t1\index.html" />
