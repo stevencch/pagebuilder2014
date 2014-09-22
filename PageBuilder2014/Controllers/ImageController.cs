@@ -88,9 +88,10 @@ namespace PageBuilder2014.Controllers
             if (!Directory.Exists(ImageController.Path + "/content/images/" + query))
             {
                 Directory.CreateDirectory(ImageController.Path + "/content/images/" + query);
+                DownloadImage(searchResult, query);
             }
 
-            DownloadImage(searchResult, query);
+            
 
             foreach (var item in searchResult)
             {

@@ -140,7 +140,7 @@ $(document).ready(function () {
     $('#btnSearch').click(function (event) {
         selectedImage = null;
         $('#btnSearch').html("Loading...");
-        $.get('/api/image?query='+$('#textSearch').val()+'&filter=size:medium&top=50&skip=0',
+        $.get('/api/image?query=' + $('#textSearch').val() + '&filter=size:medium+large&top=50&skip=0',
             function (data) {
                 resultList = '<div class="clearfix">';
                 var count = 0;
@@ -201,7 +201,7 @@ $(document).ready(function () {
     });
 
     $('#btnImageSave').click(function () {
-        currentImage.attr("src", selectedImage.children('img').attr("src"));
+        currentImage.attr("src", selectedImage.find('img').attr("src"));
         var src = _.find(currentNode.Attributes, function (item) {
             return item.Key == 'src';
         });
