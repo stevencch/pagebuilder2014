@@ -14,32 +14,36 @@ $(function () {
     sort();
     drag();
     //
-    $('.pgPagePanel').delegate('.node', 'click', function () {
-        if ($(this).hasClass("pbRoot")) {
-            $('.pgPagePanel .node').removeClass('pgSelected');
-            selectedNode.addClass('pgSelected');
-            
-        } else {
-            if (selectedNode == null && $(this).hasClass('row')) {
-                selectedNode = $(this);
-                uid = $(this).attr('uid');
+    $.contextMenu({
+        selector: '.pgPagePanel .node',
+        callback: function (key, options) {
+            if (selectedNode != null) {
+                draggable.draggable("destroy");
+                sortable.sortable("destroy");
+                selectedNode.remove();
+                selectedNode = null;
+                sortable = $(".pgPagePanel .sortable");
+                sort();
+                draggable = $(".draggable");
+                drag();
+
             }
+        },
+        items: {
+            "delete": { name: "Delete", icon: "delete" }
+
         }
     });
     //
-    $('#btnDelete').click(function (event) {
-        if (selectedNode != null) {
-            draggable.draggable("destroy");
-            sortable.sortable("destroy");
-            selectedNode.remove();
-            selectedNode = null;
-            sortable = $(".pgPagePanel .sortable");
-            sort();
-            draggable = $(".draggable");
-            drag();
-            
+    $('.pgPagePanel').delegate('.node', 'mousedown', function (e) {
+        if (e.button == 2) {
+            if ($(this).hasClass('row')) {
+                selectedNode = $(this);
+                uid = $(this).attr('uid');
+                $('.pgPagePanel .node').removeClass('pgSelected');
+                selectedNode.addClass('pgSelected');
+            }
         }
-        event.stopPropagation();
     });
     //
     $('#btnPreview').click(function (event) {
@@ -51,29 +55,29 @@ $(function () {
             data: JSON.stringify(nodeTree),
             contentType: "application/json; charset=utf-8"
         }).done(function () {
-            alert('ok');
+            alert('please edit the page in /templates/t1/mypage.html');
         }).fail(function () {
             alert('fail');
         });
         event.stopPropagation();
     });
-    
+
     $('#btnNew').click(function (event) {
         getNodeTree($('.pbRoot'), nodeTree);
         $.ajax({
             type: 'POST',
             dataType: "json",
             url: '/api/page/new',
-            data: JSON.stringify({action:'new'}),
+            data: JSON.stringify({ action: 'new' }),
             contentType: "application/json; charset=utf-8"
         }).done(function () {
-            alert('ok');
+            location.reload('/pagebuilder');
         }).fail(function () {
             alert('fail');
         });
         event.stopPropagation();
     });
-    
+
     $('#btnReload').click(function (event) {
         getNodeTree($('.pbRoot'), nodeTree);
         $.ajax({
@@ -83,16 +87,20 @@ $(function () {
             data: JSON.stringify({ action: 'reload' }),
             contentType: "application/json; charset=utf-8"
         }).done(function (data) {
-            draggable.draggable("destroy");
-            sortable.sortable("destroy");
-            treeHtml = '';
-            displayLayout(data);
-            $('.pgPagePanel').html(treeHtml);
-            sortable = $(".pgPagePanel .sortable");
-            draggable = $(".draggable");
-            sort();
-            drag();
-            alert('ok');
+            if (data) {
+                draggable.draggable("destroy");
+                sortable.sortable("destroy");
+                treeHtml = '';
+                displayLayout(data);
+                $('.pgPagePanel').html(treeHtml);
+                sortable = $(".pgPagePanel .sortable");
+                draggable = $(".draggable");
+                sort();
+                drag();
+            }
+            else {
+                alert('no page');
+            }
         }).fail(function () {
             alert('fail');
         });
@@ -133,7 +141,7 @@ function dragAndSort() {
 
 function getNodeTree(node, tree) {
     tree.pbnode = node.attr('pbnode');
-    tree.uid = node.attr('uid')?node.attr('uid'):'0';
+    tree.uid = node.attr('uid') ? node.attr('uid') : '0';
     tree.tree = [];
     if (tree.pbnode.substr(0, 1) == 's') {
         return;
@@ -156,9 +164,9 @@ function displayLayout(layout) {
     if (parseInt(layout.uid) > pbuid) {
         pbuid = parseInt(layout.uid);
     }
-    switch(layout.pbnode) {
+    switch (layout.pbnode) {
         case 'root':
-            treeHtml += '<div class="node pbRoot" pbnode="'+layout.pbnode+'"><div class="plPage">PAGE TOP</div><div class="sortable">';
+            treeHtml += '<div class="node pbRoot" pbnode="' + layout.pbnode + '"><div class="plPage">PAGE TOP</div><div class="sortable">';
             break;
         case 'c12':
             treeHtml += '<div class="row draggable node" pbnode="' + layout.pbnode + '">';
@@ -170,7 +178,7 @@ function displayLayout(layout) {
         case 'c4c':
         case 'c8a':
         case 'c8b':
-            treeHtml += '<div pbnode="' + layout.pbnode + '" class="col-xs-' + layout.pbnode.substr(1,1) + ' node"><div class="plSectionPage">SECTION TOP</div><div class="sortable">';
+            treeHtml += '<div pbnode="' + layout.pbnode + '" class="col-xs-' + layout.pbnode.substr(1, 1) + ' node"><div class="plSectionPage">SECTION TOP</div><div class="sortable">';
             break;
         default:
             treeHtml += '<div class="row draggable node" pbnode="' + layout.pbnode + '" uid="' + layout.uid + '"><img src="/Content/templates/t1/images/home/' + layout.pbnode + '.png" alt=""></div>';
@@ -180,7 +188,7 @@ function displayLayout(layout) {
         displayLayout(layout.tree[i]);
     }
 
-    switch(layout.pbnode) {
+    switch (layout.pbnode) {
         case 'root':
             treeHtml += '</div><div class="plPage">PAGE BOTTOM</div></div>';
             break;
@@ -198,7 +206,7 @@ function displayLayout(layout) {
             break;
         default:
             break;
-            
+
     }
-    
+
 }

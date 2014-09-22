@@ -4,6 +4,13 @@
     };
 }
 
+String.prototype.short = function (i) {
+    if (this.length < i) {
+        i = this.length;
+    }
+    return this.substr(0, i);
+};
+
 var currentNode = null;
 var isFound = false;
 var editText = '';
@@ -13,6 +20,7 @@ var newContent = '';
 var tempContent = '';
 var currentImage = null;
 var currentText = null;
+var selectedImage = null;
 
 $(document).ready(function () {
     $("#pbTextModal").draggable({
@@ -23,11 +31,12 @@ $(document).ready(function () {
     });
     $('#textEditor').summernote();
     $('#btnEditText').click(function (event) {
-        $('#pbTextModal').modal({
-            backdrop: false,
-            show:true
-        });
-        event.stopPropagation();
+        pbid = null;
+        showTextList();
+    });
+    $('#btnEditImage').click(function (event) {
+        imgid = null;
+        showImageList();
     });
     $('#btnSavePage').click(function (event) {
         $.ajax({
@@ -41,7 +50,6 @@ $(document).ready(function () {
         }).fail(function () {
             alert('fail');
         });
-        event.stopPropagation();
     });
     $('#btnTextSave').click(function () {
         var content=$('#textEditor').code();
@@ -97,33 +105,34 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('#textPanel').delegate('*[txtpbid]', 'click', function () {
+        pbid = $(this).attr('txtpbid');
+        currentText = $('*[pbid="'+pbid+'"]');
+        showTextList();
+    })
+
+    $('#imagePanel').delegate('*[editimgid]', 'click', function () {
+        imgid = $(this).attr('editimgid');
+        currentImage = $('*[imgid="' + imgid + '"]');
+        showImageList();
+    })
+
     $("*[pbid]").click(function (event) {
         currentText = $(this);
-        pbid=$(this).attr('pbid');
-        searchNode(pagejson, 'pbid', pbid);
-        if (currentNode != null) {
-            editText = '';
-            getEditText(currentNode);
-        }
-        $('#textEditor').code(editText);
-        $("#textKey").val(pbid);
-        $('#pbTextModal').modal({
-            backdrop: false,
-            show: true
-        });
+        pbid = $(this).attr('pbid');
+        showTextList();
+        
         event.stopPropagation();
     });
     $("*[imgid]").click(function () {
         currentImage = $(this);
         imgid = $(this).attr('imgid');
-        searchNode(pagejson, 'imgid', imgid);
-        $('#imageKey').attr('src', $(this).attr('src'));
-        $('#pbImageModal').modal({
-            backdrop: false,
-            show: true
-        });
+        showImageList();
+        
     });
     $('#btnSearch').click(function (event) {
+        selectedImage = null;
         $('#btnSearch').html("Loading...");
         $.get('/api/image?query='+$('#textSearch').val()+'&filter=size:medium&top=20&skip=60',
             function (data) {
@@ -131,7 +140,7 @@ $(document).ready(function () {
                 var count = 0;
                 _.each(data, function (item) {
                     count++;
-                    resultList += "<img class='resultImage' style='width:100px' src='" + item + "'/>";
+                    resultList += "<div class='resultImage'><img style='width:100px' src='" + item.Url + "'/><div class='imageSize'>" + item.Width + 'X' + item.Height + '</div></div>';
                     if (count % 4 == 0) {
                         resultList += '</div><div class="clearfix">';
                     }
@@ -148,11 +157,17 @@ $(document).ready(function () {
         event.stopPropagation();
     });
     $('#searchPanel').delegate(".resultImage", 'click', function() {
-        currentImage.attr("src", $(this).attr("src"));
-        var src=_.find(currentNode.Attributes, function(item) {
+        $('.resultImage').removeClass('selected');
+        $(this).addClass('selected');
+        selectedImage = $(this);
+    });
+
+    $('#btnImageSave').click(function () {
+        currentImage.attr("src", selectedImage.children('img').attr("src"));
+        var src = _.find(currentNode.Attributes, function (item) {
             return item.Key == 'src';
         });
-        src.Value = $(this).attr("src");
+        src.Value = selectedImage.attr("src");
     });
 });
 
@@ -236,3 +251,77 @@ function updateAttribute(node, key, value) {
         node.Attributes.push({ Key: key, Value: value });
     }
 }
+
+function showTextList() {
+    var html = '<ul>';
+    var textList = $("*[pbid]");
+    var active = '';
+    for (var i = 0; i < textList.length; i++) {
+        var txtpbid = $(textList[i]).attr('pbid');
+        if (txtpbid == pbid) {
+            active = ' active';
+        }
+        else {
+            active = '';
+        }
+        html += '<li class="list-group-item' + active + '" txtpbid="' +txtpbid +'">' + textList[i].innerHTML.replace(/<[^>]*>/g, '').short(40) + '</li>';
+    }
+    html += '</ul>';
+    $('#textPanel').html(html);
+
+    if (pbid != null) {
+        searchNode(pagejson, 'pbid', pbid);
+        if (currentNode != null) {
+            editText = '';
+            getEditText(currentNode);
+        }
+        $('#textEditor').code(editText);
+    }
+    $('#pbTextModal').modal({
+        backdrop: false,
+        show: true
+    });
+}
+
+function showImageList() {
+    var html = '<ul>';
+    var imgList = $("*[imgid]");
+    var active = '';
+    for (var i = 0; i < imgList.length; i++) {
+        var editimgid = $(imgList[i]).attr('imgid');
+        if (editimgid == imgid) {
+            active = ' active';
+        }
+        else {
+            active = '';
+        }
+
+        html += '<li class="list-group-item' + active + '" editimgid="' + editimgid + '"><div><img src="' + $(imgList[i]).attr('src') + '"/><div class="imageSize">' + imgList[i].width + 'X' + imgList[i].height + '</div><div></li>';
+    }
+    html += '</ul>';
+    $('#imagePanel').html(html);
+
+    $('#imagePanel')[0].scrollTop = 0;
+    var height = 0;
+    for (var j = 0; j < $('#imagePanel').find('img').length; j++) {
+        height += $('#imagePanel').find('img')[j].height * 135 / $('#imagePanel').find('img')[j].width + 20;
+        console.log($('#imagePanel').find('img')[j].height * 135 / $('#imagePanel').find('img')[j].width + 20);
+        if ($($('#imagePanel').find('img')[j]).parent().parent().hasClass('active')) {
+            break;
+        }
+    }
+    setTimeout(function () {
+        $('#imagePanel')[0].scrollTop = height;
+    }, 1000);
+    
+
+    if (imgid != null) {
+        searchNode(pagejson, 'imgid', imgid);
+    }
+    $('#pbImageModal').modal({
+        backdrop: false,
+        show: true
+    });
+}
+
+

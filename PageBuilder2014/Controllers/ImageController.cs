@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PageBuilder2014.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,10 +22,10 @@ namespace PageBuilder2014.Controllers
 
         string market = "en-us";
         // GET api/image
-        public IEnumerable<string> Get(string query, string filter, int top, int skip)
+        public IEnumerable<ImageModel> Get(string query, string filter, int top, int skip)
         {
             ImageController.count = 0;
-            return this.Search(query, filter, top, skip);
+            return this.Search(query, filter, top, skip).ToArray() ;
         }
 
         // GET api/image/5
@@ -48,7 +49,7 @@ namespace PageBuilder2014.Controllers
         {
         }
 
-        private string[] Search(string query, string filter, int top, int skip)
+        private List<ImageModel> Search(string query, string filter, int top, int skip)
         {
 
             // Create a Bing container.
@@ -66,17 +67,21 @@ namespace PageBuilder2014.Controllers
 
             // Run the query and display the results.
             var imageResults = imageQuery.Execute();
-            List<string> searchResult = new List<string>();
-            List<string> imageResult = new List<string>();
+            List<ImageModel> searchResult = new List<ImageModel>();
 
             query = Regex.Replace(query, "[^A-Za-z0-9]", "_");
 
             int count = 0;
             foreach (Bing.ImageResult iResult in imageResults)
             {
-                searchResult.Add(iResult.MediaUrl);
                 count++;
-                imageResult.Add("/content/images/" + query + "/" + count + ".jpg");
+                searchResult.Add(new ImageModel()
+                {
+                    Id = count,
+                    Height = iResult.Height,
+                    Width = iResult.Width,
+                    Url = iResult.MediaUrl
+                });
             }
 
 
@@ -85,22 +90,25 @@ namespace PageBuilder2014.Controllers
                 Directory.CreateDirectory(ImageController.Path + "/content/images/" + query);
             }
 
-            DownloadImage(searchResult,query);
+            DownloadImage(searchResult, query);
 
-
-            return imageResult.ToArray();
+            foreach (var item in searchResult)
+            {
+                item.Url = "/content/images/" + query + "/" + item.Id + ".jpg";
+            }
+            return searchResult;
         }
 
 
-        private void DownloadImage(List<string> urls,string query)
+        private void DownloadImage(List<ImageModel> urls, string query)
         {
             HttpClient client = new HttpClient() { MaxResponseContentBufferSize = 1000000 };
-            IEnumerable<Task> tasks = from url in urls select Download(url, client,query);
+            IEnumerable<Task> tasks = from url in urls select Download(url.Url, client, query);
             Task[] taskarray = tasks.ToArray();
             Task.WaitAll(taskarray);
         }
 
-        private async Task Download(string url, HttpClient client,string query)
+        private async Task Download(string url, HttpClient client, string query)
         {
             try
             {
@@ -120,7 +128,7 @@ namespace PageBuilder2014.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("fail1:"+ex.StackTrace);
+                Console.WriteLine("fail2:" + ex.StackTrace);
             }
 
 

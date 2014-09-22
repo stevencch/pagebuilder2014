@@ -19,8 +19,6 @@ namespace PageBuilder2014.Helper
         static bool isGroup = false;
         static bool isLi = false;
 
-
-
         public static NodeModel JsonConvert(string html)
         {
             NodeModel node = new NodeModel();
@@ -75,7 +73,8 @@ namespace PageBuilder2014.Helper
             }
             node.Attributes = html.Attributes.Select(x => new AttributeModel() { Key = x.Name, Value = x.Value }).ToList();
             var href=node.Attributes.Where(x => x.Key.Equals("href")).FirstOrDefault();
-            if (node.Type == "a" && href!=null)
+            var hrefskip = node.Attributes.Where(x => x.Key.Equals("hrefskip")).FirstOrDefault();
+            if (node.Type == "a" && href != null && hrefskip==null)
             {
                 href.Value = "javascript:void(0)";
             }

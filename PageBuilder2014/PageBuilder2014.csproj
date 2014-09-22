@@ -188,6 +188,7 @@
     <Compile Include="Helper\HtmlHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AttributeModel.cs" />
+    <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\NodeModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -200,6 +201,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\contextmenu\images\cut.png" />
+    <Content Include="Content\contextmenu\images\door.png" />
+    <Content Include="Content\contextmenu\images\page_white_add.png" />
+    <Content Include="Content\contextmenu\images\page_white_copy.png" />
+    <Content Include="Content\contextmenu\images\page_white_delete.png" />
+    <Content Include="Content\contextmenu\images\page_white_edit.png" />
+    <Content Include="Content\contextmenu\images\page_white_paste.png" />
+    <Content Include="Content\contextmenu\jquery.contextMenu.css" />
     <Content Include="Content\pagebuilder.css" />
     <Content Include="Content\summernote.css" />
     <Content Include="Content\templates\t1\html\home\p1.html" />
@@ -270,6 +279,9 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\bumblybo.pubxml" />
+    <Content Include="images\c4.png" />
+    <Content Include="images\c6.png" />
+    <Content Include="images\c8.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
@@ -280,6 +292,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.1.js" />
     <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
+    <Content Include="Scripts\jquery.contextMenu.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
