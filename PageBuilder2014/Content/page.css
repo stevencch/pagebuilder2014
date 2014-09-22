@@ -9,6 +9,11 @@
 .resultImage {
     float: left;
     margin: 5px;
+    display: none;
+}
+
+.resultImage img {
+    width: 100px;
 }
 
 .resultImage.selected{

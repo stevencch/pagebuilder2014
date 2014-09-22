@@ -131,31 +131,69 @@ $(document).ready(function () {
         showImageList();
         
     });
+
+    var imageCount = 50;
+    var tryCount = 3;
+    var imageLoad = [];
+    var imageUrl = [];
+    var step = 0;
     $('#btnSearch').click(function (event) {
         selectedImage = null;
         $('#btnSearch').html("Loading...");
-        $.get('/api/image?query='+$('#textSearch').val()+'&filter=size:medium&top=20&skip=60',
+        $.get('/api/image?query='+$('#textSearch').val()+'&filter=size:medium&top=50&skip=0',
             function (data) {
                 resultList = '<div class="clearfix">';
                 var count = 0;
                 _.each(data, function (item) {
+                    imageUrl[count] = item.Url;
                     count++;
-                    resultList += "<div class='resultImage'><img style='width:100px' src='" + item.Url + "'/><div class='imageSize'>" + item.Width + 'X' + item.Height + '</div></div>';
+                    resultList += "<div class='resultImage pbimage-" + item.Id + "'><div class='imagePlaceHolder'></div><div class='imageSize'>" + item.Width + 'X' + item.Height + '</div></div>';
                     if (count % 4 == 0) {
                         resultList += '</div><div class="clearfix">';
                     }
                 });
                 resultList += '</div>';
-                setTimeout(function() {
-                    $('#searchPanel').html(resultList);
-                    $('#btnSearch').html("Search");
-                }, 5000);
+                $('#searchPanel').html(resultList);
+                step = 0;
+                setTimeout(loadImage, 3000);
             })
             .fail(function () {
                 alert('fail');
             });
         event.stopPropagation();
     });
+    
+    function loadImage() {
+        step++;
+        var allPass = true;
+        for (var i = 0; i < imageCount; i++) {
+            if (imageUrl[i] != null) {
+                imageLoad[i] = new Image();
+                imageLoad[i].onload = showImage(i);
+                imageLoad[i].src = imageUrl[i];
+                allPass = false;
+            }
+        }
+        if (!allPass && step <= tryCount) {
+            //window.console && console.log(step);
+            setTimeout(loadImage, 3000);
+        } else {
+            $('#btnSearch').html('Search');
+        }
+    }
+
+    function showImage(id) {
+        return function() {
+            displayImage(id);
+        };
+    }
+    
+    function displayImage(id) {
+        $('.pbimage-' + id + ' .imagePlaceHolder').append(imageLoad[id]);
+        $('.pbimage-' + id).show();
+        imageUrl[id] = null;
+    }
+
     $('#searchPanel').delegate(".resultImage", 'click', function() {
         $('.resultImage').removeClass('selected');
         $(this).addClass('selected');
@@ -284,36 +322,28 @@ function showTextList() {
 }
 
 function showImageList() {
-    var html = '<ul>';
+    var isFound = false;
+    var html = '';
+    var beforeHtml = '';
     var imgList = $("*[imgid]");
     var active = '';
     for (var i = 0; i < imgList.length; i++) {
         var editimgid = $(imgList[i]).attr('imgid');
         if (editimgid == imgid) {
             active = ' active';
+            isFound = true;
         }
         else {
             active = '';
         }
-
-        html += '<li class="list-group-item' + active + '" editimgid="' + editimgid + '"><div><img src="' + $(imgList[i]).attr('src') + '"/><div class="imageSize">' + imgList[i].width + 'X' + imgList[i].height + '</div><div></li>';
-    }
-    html += '</ul>';
-    $('#imagePanel').html(html);
-
-    $('#imagePanel')[0].scrollTop = 0;
-    var height = 0;
-    for (var j = 0; j < $('#imagePanel').find('img').length; j++) {
-        height += $('#imagePanel').find('img')[j].height * 135 / $('#imagePanel').find('img')[j].width + 20;
-        console.log($('#imagePanel').find('img')[j].height * 135 / $('#imagePanel').find('img')[j].width + 20);
-        if ($($('#imagePanel').find('img')[j]).parent().parent().hasClass('active')) {
-            break;
+        if (isFound) {
+            html += '<li class="list-group-item' + active + '" editimgid="' + editimgid + '"><div><img src="' + $(imgList[i]).attr('src') + '"/><div class="imageSize">' + imgList[i].width + 'X' + imgList[i].height + '</div><div></li>';
+        } else {
+            beforeHtml += '<li class="list-group-item' + active + '" editimgid="' + editimgid + '"><div><img src="' + $(imgList[i]).attr('src') + '"/><div class="imageSize">' + imgList[i].width + 'X' + imgList[i].height + '</div><div></li>';
         }
+        
     }
-    setTimeout(function () {
-        $('#imagePanel')[0].scrollTop = height;
-    }, 1000);
-    
+    $('#imagePanel').html('<ul>'+html+beforeHtml+'</ul>');
 
     if (imgid != null) {
         searchNode(pagejson, 'imgid', imgid);
