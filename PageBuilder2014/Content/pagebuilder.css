@@ -25,6 +25,15 @@
     color:#fff;
     border:solid #666 2px;
 }
+ .c4{
+    background:url('/images/c4.png') no-repeat;
+}
+ .c6{
+    background:url('/images/c6.png') no-repeat;
+}
+.c8{
+    background:url('/images/c8.png') no-repeat;
+}
 .plPage{
     margin:20px 0;
     min-height: 30px;

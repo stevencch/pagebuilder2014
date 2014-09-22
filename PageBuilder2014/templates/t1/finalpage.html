@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
@@ -40,16 +40,16 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-collapse collapse">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary" id="btnEditText">Edit Text</button>
-                        <button type="button" class="btn btn-primary" id="btnEditImage">Edit Image</button>
-                        <button type="button" class="btn btn-primary" id="btnSavePage">Save Page</button>
-                    </div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" id="btnEditText">Edit Text</a></li>
+                        <li><a href="#" id="btnEidtImage">Edit Image</a></li>
+                        <li><a href="#" id="btnSavePage">Save Page</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-    [[PAGE]]
+    <div class="root"  uid="-99" ><div class="node"  uid="2" ><div class="container" ><div class="row" ><div class="headline" ><h2 pbid="AB"  isedit="true"  pbid="AB" >AB ABbbbbb</h2></div></div></div></div><div class="node"  uid="1" ><div class="purchase" ><div class="container" ><div class="row" ><div class="col-md-9" ><span class="pbspan"  pbid="AB"  isedit="true"  pbid="AC"  pbid="AC" >AB AB AB AB AB AB AB AB bbbbbb</span><p pbid="AC"  pbid="AD"  pbid="AD" >AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD AD</p></div><div class="col-md-3" ><a href="javascript:void(0)"  class="btn-buy hover-effect"  pbid="AD"  pbid="AE"  pbid="AE" >AE AE AE </a></div></div></div></div></div></div>
     <!-- Modal -->
     <div class="modal fade" id="pbTextModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -61,8 +61,7 @@
                 <div class="modal-body">
                     <form role="form">
                         <div class="form-group">
-                            <div id="textPanel">
-                            </div>
+                            <input type="text" class="form-control" id="textKey" placeholder="Enter Key">
                         </div>
                         <div class="form-group">
                             <div id="textEditor"></div>
@@ -89,13 +88,8 @@
                         <div class="col-md-4">
                             <form role="form">
                                 <div class="form-group">
-                                    <div id="imagePanel">
-                                    </div>
+                                    <img style="width:200px;" id="imageKey" />
                                 </div>
-                            </form>
-                        </div>
-                        <div class="col-md-8">
-                            <form role="form" class="form-inline">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="textSearch" placeholder="Search">
                                 </div>
@@ -103,13 +97,15 @@
                                     <button type="button" class="btn btn-primary btn-sm" id="btnSearch">Search</button>
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-md-8">
                             <div id="searchPanel" class="clearfix"></div>
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnImageSave">Save</button>
+                    <button type="button" class="btn btn-primary" id="btnTextSave">Save</button>
                 </div>
             </div>
         </div>

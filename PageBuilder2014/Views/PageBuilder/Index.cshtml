@@ -4,6 +4,7 @@
 }
 @section stylesheet
 {
+    <link href="~/Content/contextmenu/jquery.contextMenu.css" rel="stylesheet" />
     <link href="~/Content/pagebuilder.css" rel="stylesheet" />
 }
 <div class="container-fluid">
@@ -16,53 +17,53 @@
                         <div class="row draggable node" pbnode="c12">
                             <div pbnode="c6a" class="col-xs-6 node">
                                 <div class="plSectionPage">SECTION TOP</div>
-                                <div class="sortable"></div>
+                                <div class="sortable c6"></div>
                                 <div class="plSectionPage">SECTION BOTTOM</div>
                             </div>
                             <div pbnode="c6b" class="col-xs-6 node">
                                 <div class="plSectionPage">SECTION TOP</div>
-                                <div class="sortable"></div>
+                                <div class="sortable c6"></div>
                                 <div class="plSectionPage">SECTION BOTTOM</div>
                             </div>
                         </div>
                         <div class="row draggable node" pbnode="c12">
                             <div pbnode="c4a" class="col-xs-4 node">
                                 <div class="plSectionPage">SECTION TOP</div>
-                                <div class="sortable"></div>
+                                <div class="sortable c4"></div>
                                 <div class="plSectionPage">SECTION BOTTOM</div>
                             </div>
                             <div pbnode="c8b" class="col-xs-8 node">
                                 <div class="plSectionPage">SECTION TOP</div>
-                                <div class="sortable"></div>
+                                <div class="sortable c8"></div>
                                 <div class="plSectionPage">SECTION BOTTOM</div>
                             </div>
                         </div>
                         <div class="row draggable node" pbnode="c12">
                             <div pbnode="c8a" class="col-xs-8 node">
                                 <div class="plSectionPage">SECTION TOP</div>
-                                <div class="sortable"></div>
+                                <div class="sortable c8"></div>
                                 <div class="plSectionPage">SECTION BOTTOM</div>
                             </div>
                             <div pbnode="c4b" class="col-xs-4 node">
                                 <div class="plSectionPage">SECTION TOP</div>
-                                <div class="sortable"></div>
+                                <div class="sortable c4"></div>
                                 <div class="plSectionPage">SECTION BOTTOM</div>
                             </div>
                         </div>
                         <div class="row draggable node" pbnode="c12">
                             <div pbnode="c4a" class="col-xs-4 node">
                                 <div class="plSectionPage">SECTION TOP</div>
-                                <div class="sortable"></div>
+                                <div class="sortable c4"></div>
                                 <div class="plSectionPage">SECTION BOTTOM</div>
                             </div>
                             <div pbnode="c4b" class="col-xs-4 node">
                                 <div class="plSectionPage">SECTION TOP</div>
-                                <div class="sortable"></div>
+                                <div class="sortable c4"></div>
                                 <div class="plSectionPage">SECTION BOTTOM</div>
                             </div>
                             <div pbnode="c4c" class="col-xs-4 node">
                                 <div class="plSectionPage">SECTION TOP</div>
-                                <div class="sortable"></div>
+                                <div class="sortable c4"></div>
                                 <div class="plSectionPage">SECTION BOTTOM</div>
                             </div>
                         </div>
@@ -127,16 +128,13 @@
         <div class="col-md-1">
             <div class="pgButtons">
                 <p>
-                    <button type="button" class="btn btn-primary" id="btnDelete">Delete</button>
+                    <button type="button" class="btn btn-primary" id="btnNew">New Page</button>
                 </p>
                 <p>
-                    <button type="button" class="btn btn-primary" id="btnPreview">Preview</button>
+                    <button type="button" class="btn btn-primary" id="btnReload">Load Page</button>
                 </p>
                 <p>
-                    <button type="button" class="btn btn-primary" id="btnNew">New</button>
-                </p>
-                <p>
-                    <button type="button" class="btn btn-primary" id="btnReload">Reload</button>
+                    <button type="button" class="btn btn-primary" id="btnPreview">Save Page</button>
                 </p>
             </div>
         </div>
@@ -144,6 +142,7 @@
 </div>
 @section scripts
 {
+    <script src="~/Scripts/jquery.contextMenu.js"></script>
     <script src="~/Scripts/pagebuilder.js"></script>
 }
 
