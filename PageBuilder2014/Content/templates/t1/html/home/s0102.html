@@ -1,4 +1,9 @@
-﻿    <!--=== Slider ===-->
+﻿<style>
+    .da-slider {
+        background-image: url('/templates/t1/assets/plugins/parallax-slider/img/bg.jpg');
+    }
+</style>
+<!--=== Slider ===-->
 <div class="slider-inner">
     <div id="da-slider" class="da-slider">
         <div class="da-slide">
@@ -25,3 +30,9 @@
     </div><!--/da-slider-->
 </div><!--/slider-->
 <!--=== End Slider ===-->
+<script>
+    $(function () {
+        window.console && console.log($('#da-slider'));
+        $('#da-slider').cslider();
+    });
+</script>

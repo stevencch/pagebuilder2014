@@ -7,6 +7,8 @@ namespace PageBuilder2014.Models
 {
     public class ImageModel
     {
+        public string Name { get; set; }
+
         public string Url { get; set; }
 
         public int Id { get; set; }
@@ -14,5 +16,6 @@ namespace PageBuilder2014.Models
         public int? Width { get; set; }
 
         public int? Height { get; set; }
+
     }
 }

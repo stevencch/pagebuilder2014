@@ -72,7 +72,7 @@ namespace PageBuilder2014.Controllers
 
         private void GenerateFinalPage(NodeModel node, string file)
         {
-            String page = File.ReadAllText(HttpContext.Current.Server.MapPath("~/content/templates/t1/html/home/p1.html"));
+            String page = File.ReadAllText(HttpContext.Current.Server.MapPath("~/content/templates/t1/html/home/p2.html"));
             using (StreamWriter sw = new StreamWriter(file))
             {
                 page = page.Replace("[[PAGE]]", node.ToString());

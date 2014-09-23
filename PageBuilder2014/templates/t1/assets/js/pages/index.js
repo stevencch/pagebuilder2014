@@ -2,12 +2,12 @@ var Index = function () {
 
     return {
         
-        //Parallax Slider
-        initParallaxSlider: function () {
-			$(function() {
-				$('#da-slider').cslider();
-			});
-        },
+        ////Parallax Slider
+        //initParallaxSlider: function () {
+		//	$(function() {
+		//		$('#da-slider').cslider();
+		//	});
+        //},
 
         //Layer Slider
         initLayerSlider: function () {

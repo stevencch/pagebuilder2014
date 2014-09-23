@@ -47,7 +47,7 @@ namespace PageBuilder2014.Helper
                 }
 
                 var attr = parent.Attributes.Where(x => x.Key.Equals("isedit")).FirstOrDefault();
-                if (attr == null || !attr.Value.Equals("true"))
+                if ((attr == null || !attr.Value.Equals("true")) && parent.Type == "script" && parent.Type == "style")
                 {
                     StringBuilder newHtml = new StringBuilder();
                     int j = 0;

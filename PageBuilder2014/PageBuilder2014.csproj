@@ -188,6 +188,7 @@
     <Compile Include="Helper\HtmlHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AttributeModel.cs" />
+    <Compile Include="Models\CropImageModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\NodeModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -201,16 +202,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\contextmenu\images\cut.png" />
-    <Content Include="Content\contextmenu\images\door.png" />
-    <Content Include="Content\contextmenu\images\page_white_add.png" />
-    <Content Include="Content\contextmenu\images\page_white_copy.png" />
-    <Content Include="Content\contextmenu\images\page_white_delete.png" />
-    <Content Include="Content\contextmenu\images\page_white_edit.png" />
-    <Content Include="Content\contextmenu\images\page_white_paste.png" />
-    <Content Include="Content\contextmenu\jquery.contextMenu.css" />
+    <Content Include="Content\jquery.cropbox.css" />
     <Content Include="Content\pagebuilder.css" />
     <Content Include="Content\summernote.css" />
+    <Content Include="Content\templates\t1\html\home\p2.html" />
     <Content Include="Content\templates\t1\html\home\p1.html" />
     <Content Include="Content\templates\t1\html\home\s0101.html" />
     <Content Include="Content\templates\t1\html\home\s0107.html" />
@@ -293,6 +288,8 @@
     <Content Include="Scripts\jquery-ui-1.11.1.js" />
     <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
     <Content Include="Scripts\jquery.contextMenu.js" />
+    <Content Include="Scripts\jquery.cropbox.js" />
+    <Content Include="Scripts\jquery.mousewheel.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -683,7 +680,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\images\" />
+    <Folder Include="Content\images\myfolder\" />
     <Folder Include="templates\t1\assets\css\img\" />
     <Folder Include="templates\t1\assets\css\themes\headers\" />
     <Folder Include="templates\t1\assets\plugins\blockHover\css\" />

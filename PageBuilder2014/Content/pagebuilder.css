@@ -66,3 +66,6 @@
     top:60px;
     right:0px;
 }
+#btnDelete{
+    display:none;
+}

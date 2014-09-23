@@ -9,7 +9,13 @@
 .resultImage {
     float: left;
     margin: 5px;
+}
+
+#searchPanel .resultImage {
     display: none;
+}
+.cropForm{
+    display:none;
 }
 
 .resultImage img {
@@ -23,6 +29,11 @@
 #searchPanel {
     overflow-y: scroll;
     height: 350px;
+}
+
+#myFolderPanel{
+    overflow-y: scroll;
+    height: 400px;
 }
 
 #searchPanel .imageSize{

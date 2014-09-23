@@ -7,6 +7,7 @@ var data = [];
 var selectedNode = null;
 var nodeTree = {};
 var treeHtml = '';
+var isSelected = false;
 $(function () {
     sortable = $(".pgPagePanel .sortable");
     draggable = $(".pgToolbar .draggable").not(".ui-draggable");
@@ -14,35 +15,34 @@ $(function () {
     sort();
     drag();
     //
-    $.contextMenu({
-        selector: '.pgPagePanel .node',
-        callback: function (key, options) {
-            if (selectedNode != null) {
-                draggable.draggable("destroy");
-                sortable.sortable("destroy");
-                selectedNode.remove();
-                selectedNode = null;
-                sortable = $(".pgPagePanel .sortable");
-                sort();
-                draggable = $(".draggable");
-                drag();
+    $('.pgPagePanel').delegate('.node', 'click', function () {
+        if ($(this).hasClass("pbRoot")) {
+            $('.pgPagePanel .node').removeClass('pgSelected');
+            selectedNode.addClass('pgSelected');
+            isSelected = false;
 
+        } else {
+            if (!isSelected && $(this).hasClass('row')) {
+                selectedNode = $(this);
+                isSelected = true;
+                $('#btnDelete').show();
+                uid = $(this).attr('uid');
             }
-        },
-        items: {
-            "delete": { name: "Delete", icon: "delete" }
-
         }
     });
     //
-    $('.pgPagePanel').delegate('.node', 'mousedown', function (e) {
-        if (e.button == 2) {
-            if ($(this).hasClass('row')) {
-                selectedNode = $(this);
-                uid = $(this).attr('uid');
-                $('.pgPagePanel .node').removeClass('pgSelected');
-                selectedNode.addClass('pgSelected');
-            }
+    $('#btnDelete').click(function (event) {
+        if (selectedNode != null) {
+            draggable.draggable("destroy");
+            sortable.sortable("destroy");
+            selectedNode.remove();
+            selectedNode = null;
+            $('#btnDelete').hide();
+            sortable = $(".pgPagePanel .sortable");
+            sort();
+            draggable = $(".draggable");
+            drag();
+
         }
     });
     //
