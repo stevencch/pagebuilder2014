@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PageBuilder2014.Models
 {
-    public class NodeModel
+    public class NodeModel : ICloneable
     {
         public string Type { get; set; }
 
@@ -53,6 +53,11 @@ namespace PageBuilder2014.Models
             
             return sb.ToString();
 
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

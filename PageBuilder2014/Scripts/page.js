@@ -237,11 +237,25 @@ $(document).ready(function () {
     }
 
     $('#btnImageSave').click(function () {
-        currentImage.attr("src", selectedImage.find('img').attr("src"));
-        var src = _.find(currentNode.Attributes, function (item) {
-            return item.Key == 'src';
-        });
-        src.Value = selectedImage.find('img').attr("src");
+        var imageUrl=selectedImage.find('img').attr("src");
+        if (currentImage.attr('bgimage')) {
+            currentImage.attr("src", imageUrl);
+            var src = _.find(currentNode.Attributes, function (item) {
+                return item.Key == 'src';
+            });
+            src.Value = imageUrl;
+            currentImage.attr("style", "background-image: url('"+imageUrl+"')");
+            var style = _.find(currentNode.Attributes, function (item) {
+                return item.Key == 'src';
+            });
+            src.Value = "background-image: url('" + imageUrl + "')";
+        } else {
+            currentImage.attr("src", imageUrl);
+            var src = _.find(currentNode.Attributes, function (item) {
+                return item.Key == 'src';
+            });
+            src.Value = imageUrl;
+        }
     });
 
     $('#btnCropImage').click(function () {
@@ -249,6 +263,7 @@ $(document).ready(function () {
         cropwidth = $('#txtCropWidth').val();
         cropheight = $('#txtCropHeight').val();
         $('#pbCropImage').attr('src', selectedImage.find('img').attr("src"));
+        $('#pbCropModal .modal-dialog').width((parseInt(cropwidth) + 50) + 'px');
         $('#pbCropModal').modal({
             backdrop: false,
             show: true
@@ -289,7 +304,7 @@ $(document).ready(function () {
 
     $('#btnSaveCropImage').click(function () {
         $('#btnSaveCropImage').html('Saving...');
-        if (cropdata != '') {
+        if (cropdata) {
             var imageData = {
                 Name: selectedImage.find('img').attr('alt'),
                 Data: cropdata
@@ -444,20 +459,33 @@ function showImageList() {
     var imgList = $("*[imgid]");
     var active = '';
     for (var i = 0; i < imgList.length; i++) {
+        var size='';
+        if ($(imgList[i]).attr('bgimage')) {
+            size = currentImage.attr('bgimage');
+        }
+        else {
+            size = imgList[i].width + 'X' + imgList[i].height;
+        }
         var editimgid = $(imgList[i]).attr('imgid');
         if (editimgid == imgid) {
             active = ' active';
             isFound = true;
-            $('#txtCropWidth').val(imgList[i].width);
-            $('#txtCropHeight').val(imgList[i].height);
+            if ($(imgList[i]).attr('bgimage')) {
+                $('#txtCropWidth').val(size.substr(0, size.indexOf('X')));
+                $('#txtCropHeight').val(size.substring(size.indexOf('X') + 1, size.length));
+            }
+            else {
+                $('#txtCropWidth').val(imgList[i].width);
+                $('#txtCropHeight').val(imgList[i].height);
+            }
         }
         else {
             active = '';
         }
         if (isFound) {
-            html += '<li class="list-group-item' + active + '" editimgid="' + editimgid + '"><div><img src="' + $(imgList[i]).attr('src') + '"/><div class="imageSize">' + imgList[i].width + 'X' + imgList[i].height + '</div><div></li>';
+            html += '<li class="list-group-item' + active + '" editimgid="' + editimgid + '"><div><img src="' + $(imgList[i]).attr('src') + '"/><div class="imageSize">' + size + '</div><div></li>';
         } else {
-            beforeHtml += '<li class="list-group-item' + active + '" editimgid="' + editimgid + '"><div><img src="' + $(imgList[i]).attr('src') + '"/><div class="imageSize">' + imgList[i].width + 'X' + imgList[i].height + '</div><div></li>';
+            beforeHtml += '<li class="list-group-item' + active + '" editimgid="' + editimgid + '"><div><img src="' + $(imgList[i]).attr('src') + '"/><div class="imageSize">' + size + '</div><div></li>';
         }
 
     }

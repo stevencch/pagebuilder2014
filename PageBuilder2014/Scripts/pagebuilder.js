@@ -8,7 +8,12 @@ var selectedNode = null;
 var nodeTree = {};
 var treeHtml = '';
 var isSelected = false;
+var selectNodeSettings = null;
 $(function () {
+    $("#pbSettingsModal").draggable({
+        handle: ".modal-title"
+    });
+
     sortable = $(".pgPagePanel .sortable");
     draggable = $(".pgToolbar .draggable").not(".ui-draggable");
     $(".accordion").accordion({ heightStyle: "fill" });
@@ -27,6 +32,13 @@ $(function () {
                 isSelected = true;
                 $('#btnDelete').show();
                 uid = $(this).attr('uid');
+                if ($(this).attr('settings')) {
+                    selectNodeSettings = JSON.parse($(this).attr('settings'));
+                    $('#btnSettings').show();
+                }
+                else {
+                    $('#btnSettings').hide();
+                }
             }
         }
     });
@@ -106,6 +118,30 @@ $(function () {
         });
         event.stopPropagation();
     });
+
+    $('#btnSettings').click(function () {
+        var html = '';
+        for(var i=0;i<selectNodeSettings.settings.length;i++){
+            html+='<div class="form-group">';
+            html+='<label for="txt'+selectNodeSettings.settings[i].key+'">'+selectNodeSettings.settings[i].desc+'</label>';
+            html+='<input type="text" class="form-control" id="txt'+selectNodeSettings.settings[i].key+'" value="'+selectNodeSettings.settings[i].value+'"/>';
+            html+='</div>';
+        }
+        $('#settingsForm').html(html);
+        $('#pbSettingsModal').modal({
+            backdrop: false,
+            show: true
+        });
+    });
+
+    $('#btnSettingsSave').click(function () {
+        var inputs=$('#settingsForm input');
+        for (var i = 0; i < inputs.length; i++) {
+            selectNodeSettings.settings[i].value = $(inputs[i]).val();
+        }
+        selectedNode.attr('settings', JSON.stringify(selectNodeSettings));
+        $('#pbSettingsModal').modal('hide');
+    });
 });
 
 function sort() {
@@ -142,6 +178,12 @@ function dragAndSort() {
 function getNodeTree(node, tree) {
     tree.pbnode = node.attr('pbnode');
     tree.uid = node.attr('uid') ? node.attr('uid') : '0';
+    if (node.attr('settings')) {
+        tree.settings = JSON.parse(node.attr('settings'));
+    }
+    else {
+        tree.settings = {};
+    }
     tree.tree = [];
     if (tree.pbnode.substr(0, 1) == 's') {
         return;

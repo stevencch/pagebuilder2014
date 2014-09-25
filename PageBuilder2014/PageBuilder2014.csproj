@@ -194,6 +194,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PageLayout.cs" />
+    <Compile Include="Models\PageLayoutSetting.cs" />
+    <Compile Include="Models\PageLayoutSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

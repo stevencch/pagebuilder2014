@@ -136,7 +136,10 @@ namespace PageBuilder2014.Controllers
                     else
                     {
                         sbHtml.Append("<div class=\"node\" uid=\"" + pageLayout.uid + "\">");
-                        sbHtml.Append(CleanUp(html));
+                        string cleanHtml = CleanUp(html);
+                        //string finalHtml = cleanHtml;
+                        string finalHtml = HtmlHelper.ProcessSettings(cleanHtml,pageLayout.settings.settings);
+                        sbHtml.Append(finalHtml);
                         sbHtml.Append("</div>");
                     }
 

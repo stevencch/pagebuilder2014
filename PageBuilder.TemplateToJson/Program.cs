@@ -13,6 +13,7 @@ namespace PageBuilder.TemplateToJson
     class Program
     {
         public static int count = 0;
+        static string path = @"E:\Users\Administrator.CCH\Documents\visual studio 2013\Projects\PageBuilder2014\PageBuilder2014";
         static void Main(string[] args) 
         {
             for (int i = 2; i <= 2; i++)
@@ -24,12 +25,12 @@ namespace PageBuilder.TemplateToJson
                 }
                 NodeModel node = new NodeModel();
                 HtmlDocument htmlDoc = new HtmlDocument();
-                htmlDoc.Load(@"E:\Users\Administrator.CCH\Documents\visual studio 2013\Projects\PageBuilder2014\PageBuilder2014\Content\templates\t1\html\home\s01" + str + ".html");
+                htmlDoc.Load(path+@"\Content\templates\t1\html\home\s01" + str + ".html");
                 var root = htmlDoc.DocumentNode.SelectSingleNode("/div");
                 ConvertTemplate(root, node,null);
                 string json = JsonConvert.SerializeObject(node);
-                File.WriteAllText(@"E:\Users\Administrator.CCH\Documents\visual studio 2013\Projects\PageBuilder2014\PageBuilder2014\Content\templates\t1\html\home\s01" + str + ".json", json);
-                File.WriteAllText(@"E:\Users\Administrator.CCH\Documents\visual studio 2013\Projects\PageBuilder2014\PageBuilder2014\Content\templates\t1\html\home\s01" + str + "_new.html", node.ToString());
+                File.WriteAllText(path + @"\Content\templates\t1\html\home\s01" + str + ".json", json);
+                File.WriteAllText(path + @"\Content\templates\t1\html\home\s01" + str + "_new.html", node.ToString());
             }
         }
 

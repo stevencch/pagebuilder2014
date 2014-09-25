@@ -12,5 +12,7 @@ namespace PageBuilder2014.Models
         public string uid { get; set; }
 
         public List<PageLayout> tree { get; set; }
+
+        public PageLayoutSettings settings { get; set; }
     }
 }

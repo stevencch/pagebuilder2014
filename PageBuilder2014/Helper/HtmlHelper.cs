@@ -83,6 +83,12 @@ namespace PageBuilder2014.Helper
                 imageCount++;
                 node.Attributes.Add(new AttributeModel() { Key = "imgid", Value = imageCount.ToString() });
             }
+            var bgimage = node.Attributes.Where(x => x.Key.Equals("bgimage")).FirstOrDefault();
+            if (bgimage != null)
+            {
+                imageCount++;
+                node.Attributes.Add(new AttributeModel() { Key = "imgid", Value = imageCount.ToString() });
+            }
             node.Children = new List<NodeModel>();
             foreach (var item in html.ChildNodes)
             {
@@ -112,6 +118,59 @@ namespace PageBuilder2014.Helper
             int second = 65 + (count%26);
             string replaces = new StringBuilder().Append((char) first).Append((char) second).Append(' ').ToString();
             return replaces;
+        }
+
+        internal static string ProcessSettings(string html, List<PageLayoutSetting> list)
+        {
+            var node = JsonConvert(html);
+            foreach(var item in list){
+                isFound = false;
+                foundNode = null;
+                FindNode(node, "pbkey", item.key);
+                if (foundNode != null)
+                {
+                    if (item.key.StartsWith("repeat"))
+                    {
+                        int count = Convert.ToInt32(item.value);
+                        int childCount = foundNode.Children.Count();
+                        List<NodeModel> newChildren=new List<NodeModel>();
+                        int j = 0;
+                        for (int i = 0; i < count; i++)
+                        {
+                            newChildren.Add(foundNode.Children[j].Clone() as NodeModel);
+                            j++;
+                            if (j > childCount-1)
+                            {
+                                j = 1;
+                            }
+                        }
+                        foundNode.Children = newChildren;
+                    }
+                }
+            }
+            return node.ToString();
+        }
+
+        private static bool isFound = false;
+        private static NodeModel foundNode =null;
+        static void FindNode(NodeModel node, string keyName, string key)
+        {
+            if (node.Attributes.Where(x => x.Key == keyName && x.Value==key).Count() > 0)
+            {
+                foundNode = node;
+                isFound = true;
+            }
+            if (!isFound)
+            {
+                foreach (var child in node.Children)
+                {
+                    FindNode(child,keyName, key);
+                    if (isFound)
+                    {
+                        break;
+                    }
+                }
+            }
         }
     }
 }
