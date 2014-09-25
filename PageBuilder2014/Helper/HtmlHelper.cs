@@ -120,9 +120,9 @@ namespace PageBuilder2014.Helper
             return replaces;
         }
 
-        internal static string ProcessSettings(string html, List<PageLayoutSetting> list)
+        internal static string ProcessSettings(NodeModel node, List<PageLayoutSetting> list)
         {
-            var node = JsonConvert(html);
+            
             foreach(var item in list){
                 isFound = false;
                 foundNode = null;

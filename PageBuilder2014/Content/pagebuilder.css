@@ -34,6 +34,15 @@
 .c8{
     background:url('/images/c8.png') no-repeat;
 }
+.c3{
+    background:url('/images/c3.png') no-repeat;
+}
+.c12{
+    background:url('/images/c12.png') no-repeat;
+}
+.c9{
+    background:url('/images/c9.png') no-repeat;
+}
 .plPage{
     margin:20px 0;
     min-height: 30px;
@@ -41,6 +50,10 @@
     color:#fff;
     text-align: center;
 }
+.pgToolbar .container {
+    width: 100%;
+}
+
 .plSectionPage{
     margin:2px 0;
     min-height: 10px;
@@ -58,6 +71,9 @@
 /*pgPagePanel*/
 .pgSelected{
     border:solid blue 1px;
+}
+.pgPagePanel .container {
+    width: 100%;
 }
 
 /*pgButtons*/

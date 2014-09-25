@@ -105,7 +105,7 @@ namespace PageBuilder2014.Controllers
                     sbHtml.Append("<div class='root' uid='-99'>");
                     break;
                 case "c12":
-                    sbHtml.Append("<div class='row' uid='-12'>");
+                    sbHtml.Append("<div class='row container' uid='-12'>");
                     break;
                 case "c6a":
                 case "c6b":
@@ -116,9 +116,19 @@ namespace PageBuilder2014.Controllers
                 case "c4c":
                     sbHtml.Append("<div class='col-md-4' uid='-4'>");
                     break;
+                case "c3a":
+                case "c3b":
+                case "c3c":
+                case "c3d":
+                    sbHtml.Append("<div class='col-md-3' uid='-3'>");
+                    break;
                 case "c8a":
                 case "c8b":
                     sbHtml.Append("<div class='col-md-8' uid='-8'>");
+                    break;
+                case "c9a":
+                case "c9b":
+                    sbHtml.Append("<div class='col-md-9' uid='-9'>");
                     break;
                 default:
                     string html = File.ReadAllText(HttpContext.Current.Server.MapPath("~/content/templates/t1/html/home/" + pageLayout.pbnode + ".html"));
@@ -131,14 +141,15 @@ namespace PageBuilder2014.Controllers
                     }
                     if (foundNode != null)
                     {
-                        sbHtml.Append(foundNode.ToString());
+                        string finalHtml = HtmlHelper.ProcessSettings(foundNode, pageLayout.settings.settings);
+                        sbHtml.Append(finalHtml);
                     }
                     else
                     {
                         sbHtml.Append("<div class=\"node\" uid=\"" + pageLayout.uid + "\">");
                         string cleanHtml = CleanUp(html);
-                        //string finalHtml = cleanHtml;
-                        string finalHtml = HtmlHelper.ProcessSettings(cleanHtml,pageLayout.settings.settings);
+                        var node = HtmlHelper.JsonConvert(cleanHtml);
+                        string finalHtml = HtmlHelper.ProcessSettings(node,pageLayout.settings.settings);
                         sbHtml.Append(finalHtml);
                         sbHtml.Append("</div>");
                     }
